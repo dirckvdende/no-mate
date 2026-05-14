@@ -41,7 +41,6 @@ export function puzzleRender(puzzle: Puzzle): PuzzleRender {
     const centerX = (topLeft[0] + bottomRight[0]) / 2
     while (pieces.length > 0) {
         const row = pieces.splice(0, piecesPerRow)
-        console.log(row, pieces)
         const rowWidth = (row.length - 1) * (1 + PIECE_SPACING) + 1
         const y = bottomRight[1]
         bottomRight[1] += 1 + (pieces.length > 0 ? PIECE_SPACING : 0)
