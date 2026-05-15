@@ -50,6 +50,7 @@ export function useSnapItem(
     const { style: draggableStyle } = useDraggable(element, {
         containerElement,
         initialValue,
+        preventDefault: true,
         onMove: () => {
             styleOverride.value = null
             unsnap(itemId)
