@@ -58,7 +58,6 @@ export function useSnapItem(
             const result = snap(itemId, [position.x, position.y])
             targetId.value = result?.id ?? null
             const targetPosition = result?.position ?? toValue(initialPosition)
-            console.log(targetPosition)
             styleOverride.value = `
                 left: ${targetPosition[0]}px;
                 top: ${targetPosition[1]}px;
