@@ -52,13 +52,13 @@
             if (curDistance < minDistance) {
                 minDistance = curDistance
                 minTarget = targetId
-                if (!allowMultipleAtTarget)
-                    occupiedTargets.add(targetId)
             }
         }
         if (minTarget === null)
             return null
         snappedItems.set(itemId, minTarget)
+        if (!allowMultipleAtTarget)
+            occupiedTargets.add(minTarget)
         return {
             id: minTarget,
             position: [...targets.get(minTarget)!],

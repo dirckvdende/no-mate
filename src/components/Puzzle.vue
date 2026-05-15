@@ -5,6 +5,7 @@
     import { computed, provide, useTemplateRef } from "vue"
     import SnapArea from "./SnapArea.vue"
     import PuzzleSpace from "./PuzzleSpace.vue"
+    import PuzzlePiece from "./PuzzlePiece.vue"
     import { puzzleKey } from "@/types/PuzzleProvide"
 
     const { puzzle } = defineProps<{
@@ -51,6 +52,9 @@
                 <PuzzleSpace
                     v-for="space in render.spaces"
                     :position="space.position" />
+                <PuzzlePiece
+                    v-for="piece in render.pieces"
+                    :initial-position="piece.position" />
             </SnapArea>
         </div>
     </div>
