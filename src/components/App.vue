@@ -1,7 +1,6 @@
 <script setup lang="ts">
     import Puzzle from "./Puzzle.vue"
     import { puzzle } from "@/puzzles/1"
-    import Test from "./Test.vue"
 </script>
 
 <template>
