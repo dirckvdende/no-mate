@@ -49,7 +49,6 @@
             if (!allowMultipleAtTarget && occupiedTargets.has(targetId))
                 continue
             const curDistance = distance(position, targetPosition)
-            console.log("distance:", curDistance)
             if (curDistance < minDistance) {
                 minDistance = curDistance
                 minTarget = targetId
