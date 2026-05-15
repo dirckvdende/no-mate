@@ -2,7 +2,10 @@
     import { useViewTransform } from "@/composables/useViewTransform"
     import type { Puzzle } from "@/types/Puzzle"
     import { puzzleRender } from "@/util/puzzleRender"
-    import { computed, useTemplateRef } from "vue"
+    import { computed, provide, useTemplateRef } from "vue"
+    import SnapArea from "./SnapArea.vue"
+    import PuzzleSpace from "./PuzzleSpace.vue"
+    import { puzzleKey } from "@/types/PuzzleProvide"
 
     const { puzzle } = defineProps<{
         /** The puzzle to show */
@@ -23,22 +26,19 @@
         return `width: 25em; aspect-ratio: ${width} / ${height}`
     })
 
-    const { pixelSize, toPixelCoords } = useViewTransform(
+    const transform = useViewTransform(
         container,
         computed(() => [render.value.topLeft, render.value.bottomRight]),
     )
+    provide(puzzleKey, { transform })
+    const { toPixelCoords } = transform
 
-    const spaceStyles = computed(() => {
-        return render.value.spaces.map((space) => {
-            const position = toPixelCoords(space.position)
-            return `
-                top: ${position[1]}px;
-                left: ${position[0]}px;
-                width: ${1 / pixelSize.value}px;
-                height: ${1 / pixelSize.value}px;
-            `
-        })
-    })
+    const targets = computed(() => new Map(puzzle.spaces.map(
+        (position, index) => [
+            String(index),
+            toPixelCoords(position)
+        ] as const
+    )))
 </script>
 
 <template>
@@ -47,10 +47,11 @@
             :class="$style.puzzle"
             ref="puzzle"
             :style="containerStyle">
-            <div
-                v-for="spaceStyle in spaceStyles"
-                :style="spaceStyle"
-                :class="$style.space" />
+            <SnapArea :targets="targets" :snap-distance="100">
+                <PuzzleSpace
+                    v-for="space in render.spaces"
+                    :position="space.position" />
+            </SnapArea>
         </div>
     </div>
 </template>
