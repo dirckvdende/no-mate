@@ -1,14 +1,16 @@
 <script setup lang="ts">
     import Puzzle from "./Puzzle.vue"
     import { puzzle } from "@/puzzles/1"
+    import Test from "./Test.vue"
 </script>
 
 <template>
-    <div :class="$style.container">
+    <!-- <div :class="$style.container">
         <div>
             <Puzzle :puzzle="puzzle" />
         </div>
-    </div>
+    </div> -->
+    <Test />
 </template>
 
 <style lang="scss" module>
