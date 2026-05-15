@@ -5,12 +5,11 @@
 </script>
 
 <template>
-    <!-- <div :class="$style.container">
+    <div :class="$style.container">
         <div>
             <Puzzle :puzzle="puzzle" />
         </div>
-    </div> -->
-    <Test />
+    </div>
 </template>
 
 <style lang="scss" module>
