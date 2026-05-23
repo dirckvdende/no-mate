@@ -3,12 +3,11 @@
     import type { Puzzle } from "@/types/Puzzle"
     import { puzzleRender } from "@/util/puzzleRender"
     import { computed, provide, useTemplateRef } from "vue"
-    import SnapArea from "./SnapArea.vue"
     import PuzzleSpace from "./PuzzleSpace.vue"
     import PuzzlePiece from "./PuzzlePiece.vue"
     import { puzzleKey } from "@/types/PuzzleProvide"
-import { useSnapArea, type SnapAreaTarget } from "@/composables/useSnapArea"
-import { snapAreaKey } from "@/types/SnapAreaProvide"
+    import { useSnapArea, type SnapAreaTarget } from "@/composables/useSnapArea"
+    import { snapAreaKey } from "@/types/SnapAreaProvide"
 
     const { puzzle } = defineProps<{
         /** The puzzle to show */

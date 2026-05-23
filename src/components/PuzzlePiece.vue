@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { useSnapItem } from "@/composables/useSnapItem"
     import { puzzleKey } from "@/types/PuzzleProvide"
-import { snapAreaKey } from "@/types/SnapAreaProvide";
+    import { snapAreaKey } from "@/types/SnapAreaProvide";
     import { computed, inject, useTemplateRef } from "vue"
 
     const { initialPosition } = defineProps<{
