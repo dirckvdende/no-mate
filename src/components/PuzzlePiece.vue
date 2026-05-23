@@ -1,7 +1,8 @@
 <script setup lang="ts">
-    import { useSnapItem } from "@/composables/useSnapItemOld"
+    import { useSnapItem } from "@/composables/useSnapItem"
     import { puzzleKey } from "@/types/PuzzleProvide"
-    import { computed, inject, useTemplateRef, watch } from "vue"
+import { snapAreaKey } from "@/types/SnapAreaProvide";
+    import { computed, inject, useTemplateRef } from "vue"
 
     const { initialPosition } = defineProps<{
         /** Initial/base position of the puzzle piece */
@@ -10,10 +11,11 @@
     
     const container = useTemplateRef("container")
     const { transform: { toPixelCoords, pixelSize } } = inject(puzzleKey)!
-    const itemId = `piece-${initialPosition[0].toFixed()}`
-        + `-${initialPosition[1].toFixed()}`
-    const { style } = useSnapItem(container, itemId,
-        computed(() => toPixelCoords(initialPosition)))
+    const { style } = useSnapItem(container, inject(snapAreaKey)!,
+        computed(() => ({
+            x: toPixelCoords(initialPosition)[0],
+            y: toPixelCoords(initialPosition)[1],
+        })))
     const sizeStyle = computed(() => `
         width: ${1 / pixelSize.value * .9}px;
         height: ${1 / pixelSize.value * .9}px;

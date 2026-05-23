@@ -7,6 +7,8 @@
     import PuzzleSpace from "./PuzzleSpace.vue"
     import PuzzlePiece from "./PuzzlePiece.vue"
     import { puzzleKey } from "@/types/PuzzleProvide"
+import { useSnapArea, type SnapAreaTarget } from "@/composables/useSnapArea"
+import { snapAreaKey } from "@/types/SnapAreaProvide"
 
     const { puzzle } = defineProps<{
         /** The puzzle to show */
@@ -34,12 +36,21 @@
     provide(puzzleKey, { transform })
     const { toPixelCoords } = transform
 
-    const targets = computed(() => new Map(puzzle.spaces.map(
-        (position, index) => [
-            String(index),
-            toPixelCoords(position)
-        ] as const
-    )))
+    const targets = computed<SnapAreaTarget[]>(() => puzzle.spaces.map(
+        (position, index) => ({
+            name: String(index),
+            position: {
+                x: toPixelCoords(position)[0],
+                y: toPixelCoords(position)[1],
+            },
+        })
+    ))
+
+    const puzzleContainer = useTemplateRef("puzzle-container")
+    const snapArea = useSnapArea(puzzleContainer, targets, {
+        snapDistance: 100,
+    })
+    provide(snapAreaKey, snapArea)
 </script>
 
 <template>
@@ -48,14 +59,14 @@
             :class="$style.puzzle"
             ref="puzzle"
             :style="containerStyle">
-            <SnapArea :targets="targets" :snap-distance="100">
+            <div ref="puzzle-container" :class="$style['puzzle-container']">
                 <PuzzleSpace
                     v-for="space in render.spaces"
                     :position="space.position" />
                 <PuzzlePiece
                     v-for="piece in render.pieces"
                     :initial-position="piece.position" />
-            </SnapArea>
+            </div>
         </div>
     </div>
 </template>
@@ -81,5 +92,11 @@
         width: 4em;
         height: 4em;
         background-color: red;
+    }
+
+    .puzzle-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
     }
 </style>
