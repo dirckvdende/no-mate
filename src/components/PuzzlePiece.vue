@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { useSnapItem } from "@/composables/useSnapItem"
+    import { useSnapItem } from "@/composables/useSnapItemOld"
     import { puzzleKey } from "@/types/PuzzleProvide"
     import { computed, inject, useTemplateRef, watch } from "vue"
 
