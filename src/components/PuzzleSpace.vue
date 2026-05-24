@@ -1,5 +1,7 @@
 <script setup lang="ts">
+    import { useSnapTarget } from "@/composables/useSnapTarget";
     import { puzzleKey } from "@/types/PuzzleProvide"
+    import { snapAreaKey } from "@/types/SnapAreaProvide"
     import { computed, inject } from "vue"
 
     const { position } = defineProps<{
@@ -8,6 +10,7 @@
     }>()
 
     const { transform: { toPixelCoords, pixelSize } } = inject(puzzleKey)!
+    const snapArea = inject(snapAreaKey)!
 
     const style = computed(() => {
         return `
@@ -17,6 +20,13 @@
             height: ${1 / pixelSize.value * .9}px;
         `
     })
+
+    useSnapTarget(snapArea,
+        computed(() => `${position[0]},${position[1]}`),
+        computed(() => ({
+            x: toPixelCoords(position)[0],
+            y: toPixelCoords(position)[1],
+        })))
 </script>
 
 <template>

@@ -34,23 +34,11 @@ import { syncRefs } from "@vueuse/core"
         computed(() => [render.value.topLeft, render.value.bottomRight]),
     )
     provide(puzzleKey, { transform })
-    const { toPixelCoords } = transform
-
-    const targets = computed<SnapAreaTarget[]>(() => puzzle.spaces.map(
-        (position, index) => ({
-            name: String(index),
-            position: {
-                x: toPixelCoords(position)[0],
-                y: toPixelCoords(position)[1],
-            },
-        })
-    ))
 
     const puzzleContainer = useTemplateRef("puzzle-container")
     const snapArea = useSnapArea(puzzleContainer, {
         snapDistance: 100,
     })
-    syncRefs(targets, snapArea.targets)
     provide(snapAreaKey, snapArea)
 </script>
 
