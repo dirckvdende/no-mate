@@ -4,6 +4,15 @@ import { toRef, type MaybeRefOrGetter, reactive, onMounted, onUnmounted } from
 import type { SnapAreaTarget, UseSnapAreaReturn } from "./useSnapArea"
 import type { Position } from "@/types/Position"
 
+/**
+ * Add a "target" to a snap area, which is a position at which items can be
+ * snapped
+ * @param snapArea The snap area to add a target to
+ * @param name The name of the target
+ * @param position The position of the target
+ * @returns A remove function to remove the snap target from the snap area. This
+ * also happens automatically on unmounting
+ */
 export function useSnapTarget(
     snapArea: UseSnapAreaReturn,
     name: MaybeRefOrGetter<string>,

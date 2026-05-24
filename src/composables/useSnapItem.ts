@@ -5,15 +5,39 @@ import type { UseSnapAreaReturn } from "./useSnapArea"
 import type { Position } from "@/types/Position"
 import { syncRefs, useDraggable } from "@vueuse/core"
 
+/**
+ * Object returned by the useSnapItem composable
+ */
+type UseSnapItemReturn = {
+    /**
+     * The name of the target the item is currently snapped to, or null if the
+     * item is not snapped
+     */
+    target: Readonly<Ref<string | null>>
+    /**
+     * CSS style to give to the item element (this does not happen
+     * automatically!)
+     */
+    style: ComputedRef<string>
+    /** Whether the item currently being dragged */
+    isDragging: Readonly<Ref<boolean>>
+}
+
+/**
+ * Create a "snap item", which should be a child element of a snap area. This
+ * item can be dragged and snapped at specific positions defined by the snap
+ * area
+ * @param element The element to make a snap item
+ * @param snapArea The snap area that this item can snap to
+ * @param basePosition The base position to display the element at when the item
+ * is not snapped
+ * @returns Various info on the snap item
+ */
 export function useSnapItem(
     element: MaybeRefOrGetter<HTMLElement | null>,
     snapArea: UseSnapAreaReturn,
     basePosition: MaybeRefOrGetter<Position>,
-): {
-    target: Readonly<Ref<string | null>>
-    style: ComputedRef<string>
-    isDragging: Readonly<Ref<boolean>>
-} {
+): UseSnapItemReturn {
 
     const target = ref<string | null>(null)
     const targetPosition = ref<Position | null>(null)

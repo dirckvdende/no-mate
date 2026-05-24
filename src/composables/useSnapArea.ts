@@ -2,27 +2,67 @@
 import { type MaybeRefOrGetter, type Ref, ref, toValue, watch } from "vue"
 import type { Position } from "@/types/Position"
 
+/**
+ * Object returned by the useSnapArea composable
+ */
 export type UseSnapAreaReturn = {
+    /** The container element of the snap area */
     container: MaybeRefOrGetter<HTMLElement | null>
+    /** Ref to a list of targets that the snap items can snap to */
     targets: Ref<SnapAreaTarget[]>
+    /** Passed options to the composable, with defaults filled in */
     options: Required<UseSnapAreaOptions>
+    /**
+     * Snap an item to the snap area
+     * @param position The position to snap the item as close as possible to
+     * @returns An object with the currently snapped to target, the position of
+     * the target, and a function to unsnap
+     */
     snap: (position: Position) => {
+        /**
+         * The name of the target the item is currently snapped to, or null if
+         * the item is not snapped
+         */
         target: Readonly<Ref<string | null>>
+        /**
+         * Position of the target the item is snapped to, or null if the item is
+         * not snapped
+         */
         position: Readonly<Ref<Position | null>>
+        /** Unsnap the snapped item. Has no effect if the item is not snapped */
         unsnap: () => void
     }
 }
 
+/**
+ * A target that items in a snap area can be snapped to
+ */
 export type SnapAreaTarget = {
+    /** The name of the target, which should be a unique identifier */
     name: string
+    /** Position of the target */
     position: Position
 }
 
+/**
+ * Options to pass to the useSnapArea composable
+ */
 export type UseSnapAreaOptions = {
+    /** Distance below which an item can be snapped to a target (default 20) */
     snapDistance?: MaybeRefOrGetter<number>
+    /**
+     * Whether multiple items can be snapped to the same target (default false)
+     */
     multipleAtTarget?: MaybeRefOrGetter<boolean>
 }
 
+/**
+ * Create a "snap area", which is a way to keep track of items that are fixed at
+ * certain positions ("targets") because they were dragged there
+ * @param container The container element of the snap area
+ * @param options Options for snapping
+ * @returns Snap area info and utils
+ */
 export function useSnapArea(
     container: MaybeRefOrGetter<HTMLElement | null>,
     options?: UseSnapAreaOptions,
@@ -100,6 +140,11 @@ export function useSnapArea(
 
 }
 
+/**
+ * Set all undefined fields in snap area options to default values
+ * @param options The options to add the defaults to
+ * @returns Options with filled-in defaults
+ */
 function addDefaultOptions(
     options?: UseSnapAreaOptions,
 ): Required<UseSnapAreaOptions> {
