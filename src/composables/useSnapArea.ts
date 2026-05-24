@@ -4,7 +4,7 @@ import type { Position } from "@/types/Position"
 
 export type UseSnapAreaReturn = {
     container: MaybeRefOrGetter<HTMLElement | null>
-    targets: Readonly<Ref<SnapAreaTarget[]>>
+    targets: Ref<SnapAreaTarget[]>
     options: Required<UseSnapAreaOptions>
     snap: (position: Position) => {
         target: Readonly<Ref<string | null>>
@@ -25,12 +25,12 @@ export type UseSnapAreaOptions = {
 
 export function useSnapArea(
     container: MaybeRefOrGetter<HTMLElement | null>,
-    targets: Ref<SnapAreaTarget[]>,
     options?: UseSnapAreaOptions,
 ): UseSnapAreaReturn {
 
     const fullOptions = addDefaultOptions(options)
     const targetSnapCount: Map<string, number> = new Map()
+    const targets = ref<SnapAreaTarget[]>([])
 
     function distanceToTargetSquared(
         position: Position,

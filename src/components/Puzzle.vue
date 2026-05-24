@@ -8,6 +8,7 @@
     import { puzzleKey } from "@/types/PuzzleProvide"
     import { useSnapArea, type SnapAreaTarget } from "@/composables/useSnapArea"
     import { snapAreaKey } from "@/types/SnapAreaProvide"
+import { syncRefs } from "@vueuse/core"
 
     const { puzzle } = defineProps<{
         /** The puzzle to show */
@@ -46,9 +47,10 @@
     ))
 
     const puzzleContainer = useTemplateRef("puzzle-container")
-    const snapArea = useSnapArea(puzzleContainer, targets, {
+    const snapArea = useSnapArea(puzzleContainer, {
         snapDistance: 100,
     })
+    syncRefs(targets, snapArea.targets)
     provide(snapAreaKey, snapArea)
 </script>
 
