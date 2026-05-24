@@ -6,9 +6,9 @@
     import PuzzleSpace from "./PuzzleSpace.vue"
     import PuzzlePiece from "./PuzzlePiece.vue"
     import { puzzleKey } from "@/types/PuzzleProvide"
-    import { useSnapArea, type SnapAreaTarget } from "@/composables/useSnapArea"
+    import { useSnapArea } from "@/composables/useSnapArea"
     import { snapAreaKey } from "@/types/SnapAreaProvide"
-import { syncRefs } from "@vueuse/core"
+    import type { Position } from "@/types/Position"
 
     const { puzzle } = defineProps<{
         /** The puzzle to show */
@@ -17,22 +17,22 @@ import { syncRefs } from "@vueuse/core"
 
     const container = useTemplateRef("puzzle")
     const render = computed(() => puzzleRender(puzzle))
-    const renderSize = computed<[number, number]>(() => [
-        render.value.bottomRight[0] - render.value.topLeft[0],
-        render.value.bottomRight[1] - render.value.topLeft[1],
-    ])
+    const renderSize = computed<Position>(() => ({
+        x: render.value.bottomRight.x - render.value.topLeft.x,
+        y: render.value.bottomRight.y - render.value.topLeft.y,
+    }))
 
     const containerStyle = computed(() => { 
-        const [width, height] = renderSize.value
+        const { x: width, y: height } = renderSize.value
         if (height / width > 1.4)
             return `height: 35em; aspect-ratio: ${width} / ${height}`
         return `width: 25em; aspect-ratio: ${width} / ${height}`
     })
 
-    const transform = useViewTransform(
-        container,
-        computed(() => [render.value.topLeft, render.value.bottomRight]),
-    )
+    const transform = useViewTransform(container, computed(() => ({
+        topLeft: render.value.topLeft,
+        bottomRight: render.value.bottomRight,
+    })))
     provide(puzzleKey, { transform })
 
     const puzzleContainer = useTemplateRef("puzzle-container")

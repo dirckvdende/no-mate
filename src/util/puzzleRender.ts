@@ -1,6 +1,7 @@
 
 import type { Puzzle } from "@/types/Puzzle"
-import type { PuzzleRender } from "@/types/PuzzleRender"
+import type { Position } from "@/types/Position"
+import { puzzleUtil } from "./puzzleUtil"
 
 /** Margins around the rendered puzzle */
 const PUZZLE_MARGIN = .1
@@ -12,50 +13,82 @@ const PIECE_SPACING = .2
 const MIN_WIDTH = 5
 
 /**
+ * A description of how a puzzle should be rendered
+ */
+export type PuzzleRender = {
+    /** Top left coordinates of the rendered puzzle */
+    topLeft: Position
+    /** Bottom right coordinates of the rendered puzzle */
+    bottomRight: Position
+    /**
+     * Board spaces that should be rendered, in the same order as the puzzle
+     * this PuzzleRender is sourced from
+     */
+    spaces: SpaceRender[]
+    /**
+     * Board pieces that should be rendered, in the same order as the puzzle
+     * this PuzzleRender is sourced from
+     */
+    pieces: PieceRender[]
+}
+
+/**
+ * Describes the way a space on a puzzle board should be rendered
+ */
+export type SpaceRender = {
+    /** Position at which the space should be rendered */
+    position: Position
+    /** Connections with other spaces in the order top, right, bottom, left */
+    connections: [boolean, boolean, boolean, boolean]
+}
+
+/**
+ * Describes the way a puzzle piece should be rendered
+ */
+export type PieceRender = {
+    /** Initial position the piece should be rendered (when not moved) */
+    position: Position
+}
+
+/**
  * Generate rendering information from a puzzle
  * @param puzzle The puzzle to get rendering info from
  * @returns The rendering info
  */
 export function puzzleRender(puzzle: Puzzle): PuzzleRender {
-    const topLeft: [number, number] = [Infinity, Infinity]
-    const bottomRight: [number, number] = [-Infinity, -Infinity]
-    for (const space of puzzle.spaces) {
-        topLeft[0] = Math.min(topLeft[0], space[0])
-        topLeft[1] = Math.min(topLeft[1], space[1])
-        bottomRight[0] = Math.max(bottomRight[0], space[0] + 1)
-        bottomRight[1] = Math.max(bottomRight[1], space[1] + 1)
-    }
 
-    const extraWidth = MIN_WIDTH - (bottomRight[0] - topLeft[0])
+    const { topLeft, bottomRight } = puzzleUtil(puzzle)
+
+    const extraWidth = MIN_WIDTH - (bottomRight.x - topLeft.x)
     if (extraWidth > 0) {
-        topLeft[0] -= extraWidth / 2
-        bottomRight[0] += extraWidth / 2
+        topLeft.x -= extraWidth / 2
+        bottomRight.x += extraWidth / 2
     }
 
-    bottomRight[1] += MIDDLE_SPACING
+    bottomRight.y += MIDDLE_SPACING
 
-    const piecesPerRow = Math.floor(1 + (bottomRight[0] - topLeft[0] - 1)
+    const piecesPerRow = Math.floor(1 + (bottomRight.x - topLeft.x - 1)
         / (1 + PIECE_SPACING))
-    const piecePositions: [number, number][] = []
+    const piecePositions: Position[] = []
     const pieces = puzzle.pieces.slice()
-    const centerX = (topLeft[0] + bottomRight[0]) / 2
+    const centerX = (topLeft.x + bottomRight.x) / 2
     while (pieces.length > 0) {
         const row = pieces.splice(0, piecesPerRow)
         const rowWidth = (row.length - 1) * (1 + PIECE_SPACING) + 1
-        const y = bottomRight[1]
-        bottomRight[1] += 1 + (pieces.length > 0 ? PIECE_SPACING : 0)
+        const y = bottomRight.y
+        bottomRight.y += 1 + (pieces.length > 0 ? PIECE_SPACING : 0)
         for (const [index, _] of row.entries()) {
-            piecePositions.push([
-                centerX - rowWidth / 2 + (1 + PIECE_SPACING) * index,
+            piecePositions.push({
+                x: centerX - rowWidth / 2 + (1 + PIECE_SPACING) * index,
                 y,
-            ])
+            })
         }    
     }
 
-    topLeft[0] -= PUZZLE_MARGIN
-    topLeft[1] -= PUZZLE_MARGIN
-    bottomRight[0] += PUZZLE_MARGIN
-    bottomRight[1] += PUZZLE_MARGIN
+    topLeft.x -= PUZZLE_MARGIN
+    topLeft.y -= PUZZLE_MARGIN
+    bottomRight.x += PUZZLE_MARGIN
+    bottomRight.y += PUZZLE_MARGIN
 
     return {
         topLeft,
@@ -67,4 +100,5 @@ export function puzzleRender(puzzle: Puzzle): PuzzleRender {
         })),
         pieces: piecePositions.map((position) => ({ position })),
     }
+
 }
