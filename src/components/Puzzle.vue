@@ -53,8 +53,9 @@
                     v-for="space in render.spaces"
                     :position="space.position" />
                 <PuzzlePiece
-                    v-for="piece in render.pieces"
-                    :initial-position="piece.position" />
+                    v-for="piece, index in render.pieces"
+                    :initial-position="piece.position"
+                    :piece="puzzle.pieces[index]!" />
             </div>
         </div>
     </div>

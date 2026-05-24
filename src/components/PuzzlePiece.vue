@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { useSnapItem } from "@/composables/useSnapItem"
+    import type { Piece } from "@/types/Piece"
     import type { Position } from "@/types/Position"
     import { puzzleKey } from "@/types/PuzzleProvide"
     import { snapAreaKey } from "@/types/SnapAreaProvide"
@@ -8,6 +9,8 @@
     const { initialPosition } = defineProps<{
         /** Initial/base position of the puzzle piece */
         initialPosition: Position
+        /** The puzzle piece to display */
+        piece: Piece
     }>()
 
     const container = useTemplateRef("container")
@@ -24,7 +27,9 @@
     <div
         ref="container"
         :class="$style.container"
-        :style="[style, sizeStyle]" />
+        :style="[style, sizeStyle, {
+            backgroundColor: piece.color,
+        }]" />
 </template>
 
 <style lang="scss" module>
