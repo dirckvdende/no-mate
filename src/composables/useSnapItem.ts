@@ -12,6 +12,7 @@ export function useSnapItem(
 ): {
     target: Readonly<Ref<string | null>>
     style: ComputedRef<string>
+    isDragging: Readonly<Ref<boolean>>
 } {
 
     const target = ref<string | null>(null)
@@ -72,6 +73,7 @@ export function useSnapItem(
     return {
         target,
         style,
+        isDragging,
     }
 
 }
