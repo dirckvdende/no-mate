@@ -122,7 +122,7 @@ export function useSnapArea(
                 return
             }
             position.value = targetInfo.position
-        })
+        }, { deep: true })
 
         function unsnap(): void {
             if (target.value !== null)
