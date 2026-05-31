@@ -1,6 +1,6 @@
 
-import type { Puzzle } from "@/types/Puzzle"
-import type { Position } from "@/types/Position"
+import type { Puzzle } from "@/types/puzzle"
+import type { Position } from "@/types/position"
 import { puzzleUtil } from "./puzzleUtil"
 
 /** Margins around the rendered puzzle */

@@ -1,9 +1,8 @@
 
-import type { BoundingBox } from "@/types/BoundingBox"
-import type { Position } from "@/types/Position"
+import type { BoundingBox, Position } from "@/types/position"
 import { useElementSize, type MaybeComputedElementRef, type MaybeElement } from
     "@vueuse/core"
-import { computed, toValue, watch, type ComputedRef, type MaybeRefOrGetter } from "vue"
+import { computed, toValue, type ComputedRef, type MaybeRefOrGetter } from "vue"
 
 /**
  * Object returned by the useViewTransform composable

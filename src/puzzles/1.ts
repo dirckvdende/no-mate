@@ -1,6 +1,6 @@
 
 import type { Piece } from "@/types/Piece"
-import type { Puzzle } from "@/types/Puzzle"
+import type { Puzzle } from "@/types/puzzle"
 import { mdiChessBishop } from "@mdi/js"
 
 const piece: Piece = {

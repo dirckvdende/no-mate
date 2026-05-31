@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { useViewTransform } from "@/composables/useViewTransform"
-    import type { Puzzle } from "@/types/Puzzle"
+    import type { Puzzle } from "@/types/puzzle.ts"
     import { puzzleRender } from "@/util/puzzleRender"
     import { computed, provide, useTemplateRef } from "vue"
     import PuzzleSpace from "./PuzzleSpace.vue"
@@ -8,7 +8,7 @@
     import { puzzleKey } from "@/types/PuzzleProvide"
     import { useSnapArea } from "@/composables/useSnapArea"
     import { snapAreaKey } from "@/types/SnapAreaProvide"
-    import type { Position } from "@/types/Position"
+    import type { Position } from "@/types/position.ts"
 
     const { puzzle } = defineProps<{
         /** The puzzle to show */

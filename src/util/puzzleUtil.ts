@@ -1,7 +1,7 @@
 
 import type { BoundingBox } from "@/types/BoundingBox"
-import type { Position } from "@/types/Position"
-import type { Puzzle } from "@/types/Puzzle"
+import type { Position } from "@/types/position"
+import type { Puzzle } from "@/types/puzzle"
 
 /**
  * Puzzle definition with extra utility functions and info

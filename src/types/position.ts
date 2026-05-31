@@ -1,5 +1,11 @@
 
-import type { Position } from "./Position"
+/**
+ * A position in 2D space
+ */
+export type Position = {
+    x: number
+    y: number
+}
 
 /**
  * A 2D bounding box with top-left and bottom-right coords

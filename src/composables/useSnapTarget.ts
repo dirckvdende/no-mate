@@ -2,7 +2,7 @@
 import { toRef, type MaybeRefOrGetter, reactive, onMounted, onUnmounted } from
     "vue"
 import type { SnapAreaTarget, UseSnapAreaReturn } from "./useSnapArea"
-import type { Position } from "@/types/Position"
+import type { Position } from "@/types/position"
 
 /**
  * Add a "target" to a snap area, which is a position at which items can be

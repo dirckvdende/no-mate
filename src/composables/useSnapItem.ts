@@ -2,7 +2,7 @@
 import { computed, type ComputedRef, type MaybeRefOrGetter, type Ref, ref,
     toValue } from "vue"
 import type { UseSnapAreaReturn } from "./useSnapArea"
-import type { Position } from "@/types/Position"
+import type { Position } from "@/types/position"
 import { syncRefs, useDraggable } from "@vueuse/core"
 
 /**

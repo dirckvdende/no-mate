@@ -1,6 +1,6 @@
 
 import { type MaybeRefOrGetter, type Ref, ref, toValue, watch } from "vue"
-import type { Position } from "@/types/Position"
+import type { Position } from "@/types/position"
 
 /**
  * Object returned by the useSnapArea composable

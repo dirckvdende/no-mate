@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { useSnapItem } from "@/composables/useSnapItem"
-    import type { Piece } from "@/types/Piece"
-    import type { Position } from "@/types/Position"
+    import type { Piece } from "@/types/puzzle"
+    import type { Position } from "@/types/position"
     import { puzzleKey } from "@/types/PuzzleProvide"
     import { snapAreaKey } from "@/types/SnapAreaProvide"
     import { computed, inject, useTemplateRef } from "vue"

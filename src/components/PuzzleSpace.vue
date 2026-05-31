@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { useSnapTarget } from "@/composables/useSnapTarget"
-    import type { Position } from "@/types/Position"
+    import type { Position } from "@/types/position"
     import { puzzleKey } from "@/types/PuzzleProvide"
     import { snapAreaKey } from "@/types/SnapAreaProvide"
     import { computed, inject } from "vue"
