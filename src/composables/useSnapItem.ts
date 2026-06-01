@@ -33,17 +33,21 @@ type UseSnapItemReturn = {
  * @param snapArea The snap area that this item can snap to
  * @param basePosition The base position to display the element at when the item
  * is not snapped
+ * @param containerOverride Override for the snap area container element
  * @returns Various info on the snap item
  */
 export function useSnapItem(
     element: MaybeRefOrGetter<HTMLElement | null>,
     snapArea: UseSnapAreaReturn,
     basePosition: MaybeRefOrGetter<Position>,
+    containerOverride?: MaybeRefOrGetter<HTMLElement | null>,
 ): UseSnapItemReturn {
 
     const target = ref<string | null>(null)
     const targetPosition = ref<Position | null>(null)
-    const { container, snap } = snapArea
+    const { container: areaContainer, snap } = snapArea
+    const container = computed(() => toValue(containerOverride) ??
+        toValue(areaContainer))
     let unsnap = () => {}
     const position = computed(() =>
         targetPosition.value ?? toValue(basePosition))
@@ -159,6 +163,7 @@ function useCustomDraggable(
         containerElement: container,
         preventDefault: true,
         initialValue: initialPosition,
+        stopPropagation: true,
     })
 
     return { style, isDragging }

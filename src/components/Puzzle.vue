@@ -76,16 +76,10 @@
     }
 
     .puzzle {
-        background-color: green;
+        box-sizing: border-box;
+        border: 1px solid black;
         aspect-ratio: 1 / 1;
         position: relative;
-    }
-
-    .space {
-        position: absolute;
-        width: 4em;
-        height: 4em;
-        background-color: red;
     }
 
     .puzzle-container {

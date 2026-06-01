@@ -17,8 +17,8 @@
         return `
             left: ${toPixelCoords(position).x}px;
             top: ${toPixelCoords(position).y}px;
-            width: ${1 / pixelSize.value * .9}px;
-            height: ${1 / pixelSize.value * .9}px;
+            width: ${1 / pixelSize.value}px;
+            height: ${1 / pixelSize.value}px;
         `
     })
 
