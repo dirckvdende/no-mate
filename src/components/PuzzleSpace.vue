@@ -41,39 +41,56 @@
 <template>
     <div
         :class="[$style.container, {
-            [$style['empty-top']]: !connectedTop,
-            [$style['empty-right']]: !connectedRight,
-            [$style['empty-down']]: !connectedDown,
-            [$style['empty-left']]: !connectedLeft,
+            [$style['c-top']]: connectedTop,
+            [$style['c-right']]: connectedRight,
+            [$style['c-down']]: connectedDown,
+            [$style['c-left']]: connectedLeft,
         }]"
         :style="style" />
 </template>
 
 <style lang="scss" module>
-    .container {
-        position: absolute;
-        background-color: red;
-    }
-
     $border-radius: .8em;
 
-    // Top-left corner
-    .empty-top.empty-left {
-        border-top-left-radius: $border-radius;
-    }
+    .container {
+        position: absolute;
+        background-color: #bbb;
+        box-sizing: border-box;
 
-    // Top-right corner
-    .empty-top.empty-right {
-        border-top-right-radius: $border-radius;
-    }
+        // Top-left corner
+        &:not(.c-top):not(.c-left) {
+            border-top-left-radius: $border-radius;
+        }
 
-    // Bottom-left corner
-    .empty-down.empty-left {
-        border-bottom-left-radius: $border-radius;
-    }
+        // Top-right corner
+        &:not(.c-top):not(.c-right) {
+            border-top-right-radius: $border-radius;
+        }
 
-    // Bottom-right corner
-    .empty-down.empty-right {
-        border-bottom-right-radius: $border-radius;
+        // Bottom-left corner
+        &:not(.c-down):not(.c-left) {
+            border-bottom-left-radius: $border-radius;
+        }
+
+        // Bottom-right corner
+        &:not(.c-down):not(.c-right) {
+            border-bottom-right-radius: $border-radius;
+        }
+
+        &.c-top {
+            border-top: .1em solid #eee;
+        }
+
+        &.c-right {
+            border-right: .1em solid #eee;
+        }
+
+        &.c-down {
+            border-bottom: .1em solid #eee;
+        }
+
+        &.c-left {
+            border-left: .1em solid #eee;
+        }
     }
 </style>
