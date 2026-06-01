@@ -90,13 +90,23 @@ export function puzzleRender(puzzle: Puzzle): PuzzleRender {
     bottomRight.x += PUZZLE_MARGIN
     bottomRight.y += PUZZLE_MARGIN
 
+    function hasSpace(position: Position): boolean {
+        const space = puzzle.spaces.find((value) =>
+            value.x == position.x && value.y == position.y)
+        return space !== undefined
+    }
+
     return {
         topLeft,
         bottomRight,
         spaces: puzzle.spaces.map((space) => ({
             position: space,
-            // TODO: connections
-            connections: [false, false, false, false],
+            connections: [
+                hasSpace({ x: space.x, y: space.y - 1 }),
+                hasSpace({ x: space.x + 1, y: space.y }),
+                hasSpace({ x: space.x, y: space.y + 1 }),
+                hasSpace({ x: space.x - 1, y: space.y }),
+            ],
         })),
         pieces: piecePositions.map((position) => ({ position })),
     }

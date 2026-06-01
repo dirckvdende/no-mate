@@ -53,7 +53,8 @@
             <div ref="puzzle-container" :class="$style['puzzle-container']">
                 <PuzzleSpace
                     v-for="space in render.spaces"
-                    :position="space.position" />
+                    :position="space.position"
+                    :connections="space.connections" />
                 <PuzzlePiece
                     v-for="piece, index in render.pieces"
                     :initial-position="piece.position"
