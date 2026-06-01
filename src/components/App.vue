@@ -19,6 +19,7 @@
         background-color: #eee;
         margin: 0;
         font-size: min(2vh, 4vw);
+        touch-action: none;
     }
 
     .container {
