@@ -8,12 +8,16 @@
     import { syncPlacementAndTarget } from
         "@/composables/syncPlacementAndTarget"
     import Icon from "./Icon.vue"
+    import { usePuzzleStore } from "@/stores/usePuzzleStore.ts"
+    import { mdiExclamationThick } from "@mdi/js"
 
-    const { initialPosition } = defineProps<{
+    const { initialPosition, piece, pieceIndex } = defineProps<{
         /** Initial/base position of the puzzle piece */
         initialPosition: Position
         /** The puzzle piece to display */
         piece: Piece
+        /** Index of the piece in the puzzle */
+        pieceIndex: number
     }>()
 
     const placement = defineModel<Position | null>("placement",
@@ -38,6 +42,19 @@
     `)
 
     syncPlacementAndTarget(placement, target)
+
+    const { state, puzzleInterface } = usePuzzleStore()
+    const placedPosition = computed(() => {
+        const position = state.value?.placements[pieceIndex]
+        if (!position)
+            return null
+        return position
+    })
+    const isValid = computed(() => {
+        if (!puzzleInterface.value || !placedPosition.value)
+            return false
+        return piece.isValid(puzzleInterface.value, placedPosition.value)
+    })
 </script>
 
 <template>
@@ -52,11 +69,15 @@
     <div
         :class="[$style['display-box'], {
             [$style.dragging]: isDragging,
+            [$style['invalid-warn']]: !isValid && target,
         }]"
         :style="[style, sizeStyle, {
             backgroundColor: piece.color,
         }]">
-        <Icon :path="piece.icon" :class="$style.icon" />
+        <Icon :path="piece.icon" :class="$style['piece-icon']" />
+        <div :class="$style['warn-icon']">
+            <Icon :path="mdiExclamationThick" :class="$style.icon" />
+        </div>
     </div>
 </template>
 
@@ -99,9 +120,35 @@
         z-index: 2;
     }
 
-    .icon {
+    .piece-icon {
         fill: white;
         width: 60%;
         height: 60%;
+    }
+
+    .warn-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #e04331;
+        position: absolute;
+        top: -.2em;
+        right: -.2em;
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: .75em;
+        scale: 1.4;
+        opacity: 0;
+        transition: scale .2s, opacity .2s;
+
+        .icon {
+            width: 80%;
+            height: 80%;
+            fill: white;
+        }
+    }
+    .display-box.invalid-warn .warn-icon {
+        scale: 1;
+        opacity: 1;
     }
 </style>

@@ -34,6 +34,7 @@ export const usePuzzleStore = createGlobalState(() => {
     return {
         puzzle,
         state,
+        puzzleInterface,
         isSolved,
     }
 

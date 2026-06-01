@@ -59,6 +59,7 @@
                     v-for="piece, index in render.pieces"
                     :initial-position="piece.position"
                     :piece="puzzle!.pieces[index]!"
+                    :piece-index="index"
                     v-model:placement="state!.placements[index]!" />
             </div>
         </div>
