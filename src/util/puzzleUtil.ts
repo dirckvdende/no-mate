@@ -1,29 +1,6 @@
 
-import type { BoundingBox } from "@/types/BoundingBox"
-import type { Position } from "@/types/position"
+import type { BoundingBox, Position } from "@/types/position"
 import type { Puzzle } from "@/types/puzzle"
-
-/**
- * Puzzle definition with extra utility functions and info
- */
-export type PuzzleWithUtil = Puzzle & {
-    /** Top left (min) coords of the puzzle's spaces */
-    topLeft: Position
-    /** Bottom right (max) coords of the puzzle's spaces */
-    bottomRight: Position
-}
-
-/**
- * Add utility functions and info to a puzzle
- * @param puzzle The puzzle to add utility functions to
- * @returns The puzzle with utility functions and info
- */
-export function puzzleUtil(puzzle: Puzzle): PuzzleWithUtil {
-    return {
-        ...puzzle,
-        ...boundingBox(puzzle),
-    }
-}
 
 /**
  * Get the bounding box of the spaces of a puzzle
@@ -31,7 +8,7 @@ export function puzzleUtil(puzzle: Puzzle): PuzzleWithUtil {
  * @returns The bounding box as two sets of coords: the top left and bottom
  * right corners
  */
-function boundingBox(puzzle: Puzzle): BoundingBox {
+export function boundingBox(puzzle: Puzzle): BoundingBox {
     const topLeft: Position = { x: Infinity, y: Infinity }
     const bottomRight: Position = { x: -Infinity, y: -Infinity }
 

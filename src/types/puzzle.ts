@@ -1,7 +1,28 @@
 
-import type { PuzzleWithUtil } from "@/util/puzzleUtil"
-import type { PuzzleStateWithUtil } from "@/util/puzzleStateUtil"
 import type { Position } from "./position"
+
+/**
+ * Interface of the puzzle state that is passed to the Piece.isValid function.
+ * This has some functions that can be used to determine relevant aspects of the
+ * current puzzle's state
+ */
+export type PuzzleStateInterface = {
+    /**
+     * Check if a specific position has a puzzle space where pieces could be
+     * placed
+     * @param position The position at which to look
+     * @returns Whether the position has a space (may be occupied or not
+     * occupied)
+     */
+    isSpace: (position: Position) => boolean
+    /**
+     * Get the puzzle piece placed at the given position
+     * @param position The position at which to look
+     * @returns The piece placed at the position, or null if the position has
+     * piece placed
+     */
+    pieceAtPosition: (position: Position) => Piece | null
+}
 
 /**
  * A piece of the puzzle to be placed
@@ -25,8 +46,7 @@ export type Piece = {
      * @returns Whether the puzzle piece placement is valid
      */
     isValid: (
-        puzzle: PuzzleWithUtil,
-        puzzleState: PuzzleStateWithUtil,
+        puzzle: PuzzleStateInterface,
         position: Position,
     ) => boolean
 }
@@ -49,5 +69,5 @@ export type PuzzleState = {
      * Placements of the puzzle pieces, in the same ordering as the puzzle
      * pieces in the loaded puzzle. If a piece is not placed, the value is null
      */
-    placements: (Position | null)[],
+    placements: (Position | null)[]
 }

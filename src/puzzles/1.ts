@@ -1,13 +1,12 @@
 
-import type { Piece } from "@/types/Piece"
-import type { Puzzle } from "@/types/puzzle"
+import type { Puzzle, Piece } from "@/types/puzzle"
 import { mdiChessBishop } from "@mdi/js"
 
 const piece: Piece = {
     name: "piece",
     icon: mdiChessBishop,
     color: "#9500ff",
-    isValid: (puzzle, puzzleState, position) => {
+    isValid: (_, position) => {
         position = { ...position }
         return true
     },
