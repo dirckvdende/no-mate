@@ -10,7 +10,7 @@
     import type { Position } from "@/types/position.ts"
     import { usePuzzleStore } from "@/stores/usePuzzleStore.ts"
 
-    const { puzzle, state } = usePuzzleStore()
+    const { puzzle, state, isSolved } = usePuzzleStore()
 
     const container = useTemplateRef("puzzle")
     const render = computed(() => puzzle.value ? puzzleRender(puzzle.value) : {
@@ -62,6 +62,7 @@
             </div>
         </div>
     </div>
+    isSolved = {{ isSolved }}
 </template>
 
 <style lang="scss" module>
