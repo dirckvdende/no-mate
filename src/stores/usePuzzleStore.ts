@@ -27,7 +27,7 @@ export const usePuzzleStore = createGlobalState(() => {
         state.value = {
             placements: puzzle.pieces.map(() => null)
         }
-    })
+    }, { flush: "sync" })
 
     return {
         puzzle,
