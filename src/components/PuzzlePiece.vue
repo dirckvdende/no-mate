@@ -73,7 +73,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: blue;
             pointer-events: all;
         }
     }
@@ -92,16 +91,17 @@
         align-items: center;
         user-select: none;
         pointer-events: none;
+        z-index: 1;
+    }
+    .display-box.dragging {
+        scale: 1.1;
+        opacity: .8;
+        z-index: 2;
     }
 
     .icon {
         fill: white;
         width: 60%;
         height: 60%;
-    }
-
-    .display-box.dragging {
-        scale: 1.1;
-        opacity: .8;
     }
 </style>
