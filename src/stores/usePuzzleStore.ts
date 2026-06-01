@@ -29,10 +29,12 @@ export const usePuzzleStore = createGlobalState(() => {
         }
     }, { flush: "sync" })
 
+    const isSolved = useIsSolved(puzzle, state, puzzleInterface)
+
     return {
         puzzle,
         state,
-        isSolved: useIsSolved(puzzle, state, puzzleInterface),
+        isSolved,
     }
 
 })

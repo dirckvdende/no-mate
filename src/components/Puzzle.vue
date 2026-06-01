@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { useViewTransform } from "@/composables/useViewTransform"
-    import type { Puzzle } from "@/types/puzzle.ts"
     import { puzzleRender } from "@/util/puzzleRender"
     import { computed, provide, useTemplateRef } from "vue"
     import PuzzleSpace from "./PuzzleSpace.vue"
@@ -9,14 +8,17 @@
     import { useSnapArea } from "@/composables/useSnapArea"
     import { snapAreaKey } from "@/types/SnapAreaProvide"
     import type { Position } from "@/types/position.ts"
+    import { usePuzzleStore } from "@/stores/usePuzzleStore.ts"
 
-    const { puzzle } = defineProps<{
-        /** The puzzle to show */
-        puzzle: Puzzle
-    }>()
+    const { puzzle, state } = usePuzzleStore()
 
     const container = useTemplateRef("puzzle")
-    const render = computed(() => puzzleRender(puzzle))
+    const render = computed(() => puzzle.value ? puzzleRender(puzzle.value) : {
+        topLeft: { x: 0, y: 0 },
+        bottomRight: { x: 0, y: 0 },
+        spaces: [],
+        pieces: [],
+    })
     const renderSize = computed<Position>(() => ({
         x: render.value.bottomRight.x - render.value.topLeft.x,
         y: render.value.bottomRight.y - render.value.topLeft.y,
@@ -55,7 +57,8 @@
                 <PuzzlePiece
                     v-for="piece, index in render.pieces"
                     :initial-position="piece.position"
-                    :piece="puzzle.pieces[index]!" />
+                    :piece="puzzle!.pieces[index]!"
+                    v-model:placement="state!.placements[index]!" />
             </div>
         </div>
     </div>

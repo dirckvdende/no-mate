@@ -4,7 +4,9 @@
     import type { Position } from "@/types/position"
     import { puzzleKey } from "@/types/PuzzleProvide"
     import { snapAreaKey } from "@/types/SnapAreaProvide"
-    import { computed, inject, useTemplateRef, watch } from "vue"
+    import { computed, inject, useTemplateRef } from "vue"
+    import { syncPlacementAndTarget } from
+        "@/composables/syncPlacementAndTarget"
 
     const { initialPosition } = defineProps<{
         /** Initial/base position of the puzzle piece */
@@ -12,6 +14,9 @@
         /** The puzzle piece to display */
         piece: Piece
     }>()
+
+    const placement = defineModel<Position | null>("placement",
+        { required: true })
 
     const container = useTemplateRef("container")
     const { transform: { toPixelCoords, pixelSize } } = inject(puzzleKey)!
@@ -22,7 +27,7 @@
         height: ${1 / pixelSize.value * .9}px;
     `)
 
-    watch(target, v => console.log(v))
+    syncPlacementAndTarget(placement, target)
 </script>
 
 <template>
