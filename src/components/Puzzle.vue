@@ -39,7 +39,7 @@
 
     const puzzleContainer = useTemplateRef("puzzle-container")
     const snapArea = useSnapArea(puzzleContainer, {
-        snapDistance: 100,
+        snapDistance: computed(() => .6 / transform.pixelSize.value),
     })
     provide(snapAreaKey, snapArea)
 </script>
