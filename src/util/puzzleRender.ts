@@ -1,7 +1,7 @@
 
 import type { Puzzle } from "@/types/puzzle"
 import type { Position } from "@/types/position"
-import { puzzleUtil } from "./puzzleUtil"
+import { boundingBox } from "./puzzleUtil"
 
 /** Margins around the rendered puzzle */
 const PUZZLE_MARGIN = .1
@@ -57,7 +57,7 @@ export type PieceRender = {
  */
 export function puzzleRender(puzzle: Puzzle): PuzzleRender {
 
-    const { topLeft, bottomRight } = puzzleUtil(puzzle)
+    const { topLeft, bottomRight } = boundingBox(puzzle)
 
     const extraWidth = MIN_WIDTH - (bottomRight.x - topLeft.x)
     if (extraWidth > 0) {

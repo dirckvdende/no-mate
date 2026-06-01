@@ -14,11 +14,13 @@ export type UseSnapAreaReturn = {
     options: Required<UseSnapAreaOptions>
     /**
      * Snap an item to the snap area
-     * @param position The position to snap the item as close as possible to
+     * @param positionOrTarget The position to snap the item as close as
+     * possible to, or the target to snap to. If the target is occupied the item
+     * is not snapped
      * @returns An object with the currently snapped to target, the position of
      * the target, and a function to unsnap
      */
-    snap: (position: Position) => {
+    snap: (positionOrTarget: Position | string) => {
         /**
          * The name of the target the item is currently snapped to, or null if
          * the item is not snapped
@@ -98,12 +100,21 @@ export function useSnapArea(
         return closestTarget
     }
 
-    function snap(snapPosition: Position): {
+    function getBestSnapTargetFromName(name: string): SnapAreaTarget | null {
+        for (const target of targets.value)
+            if (target.name == name && targetIsAvailable(target))
+                return target
+        return null
+    }
+
+    function snap(snapPositionOrTarget: Position | string): {
         target: Readonly<Ref<string | null>>
         position: Readonly<Ref<Position | null>>
         unsnap: () => void
     } {
-        const bestSnapTarget = getBestSnapTarget(snapPosition)
+        const bestSnapTarget = typeof snapPositionOrTarget == "string"
+            ? getBestSnapTargetFromName(snapPositionOrTarget)
+            : getBestSnapTarget(snapPositionOrTarget)
         const target = ref<string | null>(null)
         const position = ref<Position | null>(null)
 
