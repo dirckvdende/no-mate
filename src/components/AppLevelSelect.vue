@@ -22,7 +22,7 @@
             <div :class="$style.checkmark">
                 <Icon :path="mdiCheckBold" :class="$style.icon" />
             </div>
-    </button>
+        </button>
     </div>
 </template>
 
