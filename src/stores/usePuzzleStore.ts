@@ -9,7 +9,7 @@ import { computed, ref, toValue, watch, type ComputedRef, type MaybeRefOrGetter,
 /** Store for the currently loaded puzzle and solving state */
 export const usePuzzleStore = createGlobalState(() => {
 
-    const { puzzle } = useLoadedPuzzle()
+    const { id: puzzleId, puzzle } = useLoadedPuzzle()
     const state: Ref<PuzzleState | null> = ref(null)
     const puzzleInterface = computed(() => {
         if (!puzzle.value || !state.value)
@@ -34,6 +34,7 @@ export const usePuzzleStore = createGlobalState(() => {
 
     return {
         puzzle,
+        puzzleId,
         state,
         puzzleInterface,
         isSolved,

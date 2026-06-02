@@ -1,11 +1,16 @@
 <script setup lang="ts">
+    import { usePuzzleStore } from "@/stores/usePuzzleStore.ts";
     import Puzzle from "./Puzzle.vue"
+    import AppLevelSelect from "./AppLevelSelect.vue";
+
+    const { puzzle } = usePuzzleStore()
 </script>
 
 <template>
     <div :class="$style.container">
         <div>
-            <Puzzle />
+            <Puzzle v-if="puzzle" />
+            <AppLevelSelect v-else />
         </div>
     </div>
 </template>
@@ -16,6 +21,15 @@
         margin: 0;
         font-size: min(2vh, 4vw);
         touch-action: none;
+        font-family: "Doppio One", sans-serif;
+        color: #222;
+        user-select: none;
+    }
+
+    button {
+        font-size: 1em;
+        font-family: inherit;
+        color: inherit;
     }
 
     .container {
