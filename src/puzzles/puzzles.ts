@@ -1,9 +1,7 @@
 
-import { puzzle as puzzle1 } from './1'
-import { puzzle as puzzle2 } from './2'
-
 /** List of all puzzles */
 export const puzzles = {
-    '1': puzzle1,
-    '2': puzzle2,
+    '1': (await import("./1")).puzzle,
+    '2': (await import("./2")).puzzle,
+    '3': (await import("./3")).puzzle,
 } as const
