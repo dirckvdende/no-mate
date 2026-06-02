@@ -18,19 +18,17 @@
     <h1>Tomaat</h1>
     <div :class="$style['level-list']">
         <div :class="$style.list">
-            <template v-for="_ in 100">
-                <button
-                    v-for="_, id in puzzles"
-                    :class="$style.level"
-                    @click="loadLevel(id)">
-                    #{{ id }}
-                    <div
-                        v-if="completedPuzzles.find(v => v == id)"
-                        :class="$style.checkmark">
-                        <Icon :path="mdiCheckBold" :class="$style.icon" />
-                    </div>
-                </button>
-            </template>
+            <button
+                v-for="_, id in puzzles"
+                :class="$style.level"
+                @click="loadLevel(id)">
+                #{{ id }}
+                <div
+                    v-if="completedPuzzles.find(v => v == id)"
+                    :class="$style.checkmark">
+                    <Icon :path="mdiCheckBold" :class="$style.icon" />
+                </div>
+            </button>
         </div>
         <div :class="$style['fade-top']" />
         <div :class="$style['fade-bottom']" />
