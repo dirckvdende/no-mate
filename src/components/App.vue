@@ -1,9 +1,5 @@
 <script setup lang="ts">
-    import { usePuzzleStore } from "@/stores/usePuzzleStore.ts";
     import Puzzle from "./Puzzle.vue"
-    import { puzzle } from "@/puzzles/1"
-
-    usePuzzleStore().puzzle.value = puzzle
 </script>
 
 <template>

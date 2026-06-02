@@ -1,4 +1,5 @@
 
+import { useLoadedPuzzle } from "@/composables/useLoadedPuzzle"
 import type { Puzzle, PuzzleState, PuzzleStateInterface } from "@/types/puzzle"
 import { puzzleStateInterface } from "@/util/puzzleStateInterface"
 import { createGlobalState } from "@vueuse/core"
@@ -8,7 +9,7 @@ import { computed, ref, toValue, watch, type ComputedRef, type MaybeRefOrGetter,
 /** Store for the currently loaded puzzle and solving state */
 export const usePuzzleStore = createGlobalState(() => {
 
-    const puzzle: Ref<Puzzle | null> = ref(null)
+    const { puzzle } = useLoadedPuzzle()
     const state: Ref<PuzzleState | null> = ref(null)
     const puzzleInterface = computed(() => {
         if (!puzzle.value || !state.value)
@@ -27,7 +28,7 @@ export const usePuzzleStore = createGlobalState(() => {
         state.value = {
             placements: puzzle.pieces.map(() => null)
         }
-    }, { flush: "sync" })
+    }, { immediate: true, flush: "sync" })
 
     const isSolved = useIsSolved(puzzle, state, puzzleInterface)
 
