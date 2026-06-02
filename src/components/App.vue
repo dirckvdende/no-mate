@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { usePuzzleStore } from "@/stores/usePuzzleStore.ts";
-    import Puzzle from "./Puzzle.vue"
     import AppLevelSelect from "./AppLevelSelect.vue";
+    import AppPuzzleView from "./AppPuzzleView.vue"
 
     const { puzzle } = usePuzzleStore()
 </script>
@@ -9,7 +9,7 @@
 <template>
     <div :class="$style.container">
         <div>
-            <Puzzle v-if="puzzle" />
+            <AppPuzzleView v-if="puzzle" />
             <AppLevelSelect v-else />
         </div>
     </div>
@@ -19,7 +19,14 @@
     body {
         background-color: #eee;
         margin: 0;
-        font-size: min(2vh, 4vw);
+        font-size: min(
+            calc(2vh
+                - env(safe-area-inset-top, 0px)
+                - env(safe-area-inset-bottom, 0px)),
+            calc(4vw
+                - env(safe-area-inset-left, 0px)
+                - env(safe-area-inset-right, 0px)),
+        );
         touch-action: none;
         font-family: "Doppio One", sans-serif;
         color: #222;
@@ -30,6 +37,8 @@
         font-size: 1em;
         font-family: inherit;
         color: inherit;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
     }
 
     .container {
@@ -48,7 +57,7 @@
             max-width: 35em;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
         }
     }

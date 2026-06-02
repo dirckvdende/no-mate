@@ -64,7 +64,6 @@
             </div>
         </div>
     </div>
-    isSolved = {{ isSolved }}
 </template>
 
 <style lang="scss" module>
@@ -79,7 +78,6 @@
 
     .puzzle {
         box-sizing: border-box;
-        border: 1px solid black;
         aspect-ratio: 1 / 1;
         position: relative;
     }

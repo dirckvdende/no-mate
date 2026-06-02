@@ -5,6 +5,7 @@
     import { mdiCheckBold } from "@mdi/js"
     import { useCompletedPuzzlesStore } from
         "@/stores/useCompletedPuzzlesStore.ts"
+    import Footer from "./Footer.vue"
 
     const { puzzleId } = usePuzzleStore()
     const { completedPuzzles } = useCompletedPuzzlesStore()
@@ -15,7 +16,7 @@
 </script>
 
 <template>
-    <h1>Tomaat</h1>
+    <h1 :class="$style.title">Tomaat</h1>
     <div :class="$style['level-list']">
         <div :class="$style.list">
             <button
@@ -33,14 +34,11 @@
         <div :class="$style['fade-top']" />
         <div :class="$style['fade-bottom']" />
     </div>
-    <p :class="$style.credit">
-        Created by Dirck van den Ende<br />
-        <a href="https://dirck.dev/projects">View more projects</a>
-    </p>
+    <Footer />
 </template>
 
 <style lang="scss" module>
-    h1 {
+    .title {
         font-size: 3.5em;
         margin: 1.5em 0 .5em 0;
     }
@@ -126,18 +124,6 @@
                 width: 65%;
                 height: 65%;
             }
-        }
-    }
-
-    .credit {
-        text-align: center;
-        color: #666;
-        font-size: .8em;
-        margin-bottom: 1em;
-
-        & > a {
-            color: inherit;
-            text-decoration: underline;
         }
     }
 </style>
