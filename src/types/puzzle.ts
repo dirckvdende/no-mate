@@ -16,6 +16,12 @@ export type PuzzleStateInterface = {
      */
     isSpace: (position: Position) => boolean
     /**
+     * Check if a position is inside the bounding box of the puzzle
+     * @param position The position to check
+     * @returns Whether the given position is in the bounding box
+     */
+    isInsideBoundingBox: (position: Position) => boolean
+    /**
      * Get the puzzle piece placed at the given position
      * @param position The position at which to look
      * @returns The piece placed at the position, or null if the position has

@@ -2,6 +2,7 @@
 import type { Position } from "@/types/position"
 import type { Piece, Puzzle, PuzzleState, PuzzleStateInterface } from
     "@/types/puzzle"
+import { boundingBox } from "./puzzleUtil"
 
 /**
  * Get a puzzle state interface that can be passed to the Piece.isValid
@@ -16,11 +17,20 @@ export function puzzleStateInterface(
     state: PuzzleState,
 ): PuzzleStateInterface {
 
+    const box = boundingBox(puzzle)
+
     // TODO: Optimize
     function isSpace(position: Position): boolean {
         const space = puzzle.spaces.find((other) =>
             other.x == position.x && other.y == position.y)
         return space !== undefined
+    }
+
+    function isInsideBoundingBox(position: Position): boolean {
+        return position.x >= box.topLeft.x
+            && position.y >= box.topLeft.y
+            && position.x < box.bottomRight.x
+            && position.y < box.bottomRight.y
     }
 
     // TODO: Optimize
@@ -33,6 +43,6 @@ export function puzzleStateInterface(
         return piece ? piece : null
     }
 
-    return { isSpace, pieceAtPosition }
+    return { isSpace, isInsideBoundingBox, pieceAtPosition }
 
 }
