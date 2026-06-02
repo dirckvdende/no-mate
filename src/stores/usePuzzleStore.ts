@@ -5,6 +5,7 @@ import { puzzleStateInterface } from "@/util/puzzleStateInterface"
 import { createGlobalState } from "@vueuse/core"
 import { computed, ref, toValue, watch, type ComputedRef, type MaybeRefOrGetter,
     type Ref } from "vue"
+import { useCompletedPuzzlesStore } from "./useCompletedPuzzlesStore"
 
 /** Store for the currently loaded puzzle and solving state */
 export const usePuzzleStore = createGlobalState(() => {
@@ -31,6 +32,15 @@ export const usePuzzleStore = createGlobalState(() => {
     }, { immediate: true, flush: "sync" })
 
     const isSolved = useIsSolved(puzzle, state, puzzleInterface)
+
+    // TODO: Should probably move this somewhere else, along with displaying
+    // some popup!
+    const { addSolved } = useCompletedPuzzlesStore()
+    watch(isSolved, solved => {
+        if (!solved || !puzzleId.value)
+            return
+        addSolved(puzzleId.value)
+    }, { immediate: true })
 
     return {
         puzzle,

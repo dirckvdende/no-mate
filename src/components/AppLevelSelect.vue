@@ -3,8 +3,11 @@
     import { usePuzzleStore } from "@/stores/usePuzzleStore"
     import Icon from "./Icon.vue"
     import { mdiCheckBold } from "@mdi/js"
+    import { useCompletedPuzzlesStore } from
+        "@/stores/useCompletedPuzzlesStore.ts"
 
     const { puzzleId } = usePuzzleStore()
+    const { completedPuzzles } = useCompletedPuzzlesStore()
 
     function loadLevel(id: keyof typeof puzzles): void {
         puzzleId.value = id
@@ -19,7 +22,9 @@
             :class="$style.level"
             @click="loadLevel(id)">
             #{{ id }}
-            <div :class="$style.checkmark">
+            <div
+                v-if="completedPuzzles.find(v => v == id)"
+                :class="$style.checkmark">
                 <Icon :path="mdiCheckBold" :class="$style.icon" />
             </div>
         </button>
@@ -29,7 +34,7 @@
 <style lang="scss" module>
     h1 {
         font-size: 3em;
-        margin: 1.5em 0 1em 0;
+        margin: 1.5em 0 .5em 0;
     }
 
     .level-list {
@@ -43,6 +48,7 @@
         flex-wrap: wrap;
         scrollbar-color: #222 transparent;
         margin-bottom: 4em;
+        padding: 1em 0;
     }
 
     .level {
