@@ -8,7 +8,7 @@ const PUZZLE_MARGIN = .1
 /** Spacing between the rendered spaces and puzzle pieces */
 const MIDDLE_SPACING = 1
 /** Spacing between puzzle piece base positions */
-const PIECE_SPACING = .2
+const PIECE_SPACING = .1
 /** Minimum width of the board render */
 const MIN_WIDTH = 5
 
