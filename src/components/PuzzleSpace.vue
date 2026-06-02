@@ -5,7 +5,7 @@
     import { snapAreaKey } from "@/types/SnapAreaProvide"
     import { computed, inject } from "vue"
 
-    const { position, connections } = defineProps<{
+    const { position, connections: _connections } = defineProps<{
         /** Position of the space */
         position: Position
         /**
@@ -14,17 +14,10 @@
         connections: [boolean, boolean, boolean, boolean],
     }>()
 
-    const [
-        connectedTop, 
-        connectedRight, 
-        connectedDown, 
-        connectedLeft,
-    ] = connections
-
     const { transform: { toPixelCoords, pixelSize } } = inject(puzzleKey)!
     const snapArea = inject(snapAreaKey)!
 
-    const style = computed(() => {
+    const containerStyle = computed(() => {
         return `
             left: ${toPixelCoords(position).x}px;
             top: ${toPixelCoords(position).y}px;
@@ -40,13 +33,10 @@
 
 <template>
     <div
-        :class="[$style.container, {
-            [$style['c-top']]: connectedTop,
-            [$style['c-right']]: connectedRight,
-            [$style['c-down']]: connectedDown,
-            [$style['c-left']]: connectedLeft,
-        }]"
-        :style="style" />
+        :class="$style.container"
+        :style="containerStyle">
+        <div :class="$style.square" />
+    </div>
 </template>
 
 <style lang="scss" module>
@@ -54,43 +44,16 @@
 
     .container {
         position: absolute;
-        background-color: #bbb;
         box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-        // Top-left corner
-        &:not(.c-top):not(.c-left) {
-            border-top-left-radius: $border-radius;
-        }
-
-        // Top-right corner
-        &:not(.c-top):not(.c-right) {
-            border-top-right-radius: $border-radius;
-        }
-
-        // Bottom-left corner
-        &:not(.c-down):not(.c-left) {
-            border-bottom-left-radius: $border-radius;
-        }
-
-        // Bottom-right corner
-        &:not(.c-down):not(.c-right) {
-            border-bottom-right-radius: $border-radius;
-        }
-
-        &.c-top {
-            border-top: .1em solid #eee;
-        }
-
-        &.c-right {
-            border-right: .1em solid #eee;
-        }
-
-        &.c-down {
-            border-bottom: .1em solid #eee;
-        }
-
-        &.c-left {
-            border-left: .1em solid #eee;
+        .square {
+            border-radius: $border-radius;
+            width: 85%;
+            height: 85%;
+            background-color: #c9c9c9;
         }
     }
 </style>
