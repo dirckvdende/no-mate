@@ -33,15 +33,6 @@ export const usePuzzleStore = createGlobalState(() => {
 
     const isSolved = useIsSolved(puzzle, state, puzzleInterface)
 
-    // TODO: Should probably move this somewhere else, along with displaying
-    // some popup!
-    const { addSolved } = useCompletedPuzzlesStore()
-    watch(isSolved, solved => {
-        if (!solved || !puzzleId.value)
-            return
-        addSolved(puzzleId.value)
-    }, { immediate: true })
-
     return {
         puzzle,
         puzzleId,

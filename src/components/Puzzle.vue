@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { useViewTransform } from "@/composables/useViewTransform"
     import { puzzleRender } from "@/util/puzzleRender"
-    import { computed, provide, useTemplateRef } from "vue"
+    import { computed, provide, ref, useTemplateRef, watch } from "vue"
     import PuzzleSpace from "./PuzzleSpace.vue"
     import PuzzlePiece from "./PuzzlePiece.vue"
     import { puzzleKey } from "@/types/PuzzleProvide"
@@ -9,8 +9,11 @@
     import { snapAreaKey } from "@/types/SnapAreaProvide"
     import type { Position } from "@/types/position.ts"
     import { usePuzzleStore } from "@/stores/usePuzzleStore.ts"
+    import LevelCompletedPopup from "./LevelCompletedPopup.vue"
+    import { useCompletedPuzzlesStore } from
+        "@/stores/useCompletedPuzzlesStore.ts"
 
-    const { puzzle, state, isSolved } = usePuzzleStore()
+    const { puzzle, puzzleId, state, isSolved } = usePuzzleStore()
 
     const container = useTemplateRef("puzzle")
     const render = computed(() => puzzle.value ? puzzleRender(puzzle.value) : {
@@ -42,6 +45,16 @@
         snapDistance: computed(() => .6 / transform.pixelSize.value),
     })
     provide(snapAreaKey, snapArea)
+
+    // Show popup and store solved status once solved
+    const popupVisible = ref(false)
+    const { addSolved } = useCompletedPuzzlesStore()
+    watch(isSolved, (solved, prevSolved) => {
+        if (!solved || prevSolved == solved || !puzzleId.value)
+            return
+        popupVisible.value = true
+        addSolved(puzzleId.value)
+    })
 </script>
 
 <template>
@@ -64,6 +77,7 @@
             </div>
         </div>
     </div>
+    <LevelCompletedPopup v-model:visible="popupVisible" />
 </template>
 
 <style lang="scss" module>
