@@ -4,7 +4,8 @@ import type { Position } from "@/types/position"
 import { mdiChessBishop, mdiChessQueen, mdiChessRook } from "@mdi/js"
 
 export const bishop: Piece = {
-    name: "bishop",
+    name: "Bishop",
+    description: "Can attack diagonally.",
     icon: mdiChessBishop,
     color: "#9500ff",
     isValid: ({ isSpace, pieceAtPosition }, position) => {
@@ -31,7 +32,8 @@ export const bishop: Piece = {
 }
 
 export const rook: Piece = {
-    name: "rook",
+    name: "Rook",
+    description: "Can attack horizontally and vertically.",
     icon: mdiChessRook,
     color: "#ff9900",
     isValid: ({ isSpace, pieceAtPosition }, position) => {
@@ -58,7 +60,8 @@ export const rook: Piece = {
 }
 
 export const queen: Piece = {
-    name: "queen",
+    name: "Queen",
+    description: "Can attack horizontally, vertically, and diagonally.",
     icon: mdiChessQueen,
     color: "#ff0062",
     isValid: ({ isSpace, pieceAtPosition }, position) => {

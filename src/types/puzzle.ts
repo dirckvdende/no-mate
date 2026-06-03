@@ -39,6 +39,8 @@ export type Piece = {
      * type
      */
     name: string
+    /** Description displayed when showing help */
+    description: string
     /** Display icon of the puzzle piece */
     icon: string
     /** Display color of the puzzle piece */

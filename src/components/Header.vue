@@ -2,6 +2,8 @@
     import { mdiDotsHorizontal, mdiHelp } from "@mdi/js"
     import Icon from "./Icon.vue"
     import { usePuzzleStore } from "@/stores/usePuzzleStore.ts"
+    import HelpPopup from "./HelpPopup.vue"
+    import { ref } from "vue"
 
     const {
         title = "",
@@ -11,6 +13,8 @@
     }>()
 
     const { puzzleId } = usePuzzleStore()
+
+    const helpVisible = ref(false)
 </script>
 
 <template>
@@ -27,12 +31,15 @@
                 <h1 :class="$style.title">{{ title }}</h1>
             </div>
             <div :class="$style.right">
-                <button :class="$style['nav-button']">
+                <button
+                    @click="helpVisible = true"
+                    :class="$style['nav-button']">
                     <Icon :path="mdiHelp" :class="$style.icon" />
                 </button>
             </div>
         </div>
     </header>
+    <HelpPopup v-model:visible="helpVisible" />
 </template>
 
 <style lang="scss" module>

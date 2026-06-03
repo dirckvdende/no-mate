@@ -101,7 +101,7 @@
             box-sizing: border-box;
             border-bottom-left-radius: $border-radius;
             border-bottom-right-radius: $border-radius;
-            padding: 1em;
+            padding: 1.5em;
             display: flex;
             flex-direction: column;
             align-items: stretch;

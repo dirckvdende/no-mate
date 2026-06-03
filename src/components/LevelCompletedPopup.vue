@@ -96,7 +96,7 @@
     }
 
     .no-next-text {
-        font-size: 1.2em;
+        font-size: 1.1em;
         text-align: center;
     }
 </style>
