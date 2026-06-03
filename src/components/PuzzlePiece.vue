@@ -135,9 +135,9 @@
         position: absolute;
         top: -.2em;
         right: -.2em;
-        width: 1.5em;
-        height: 1.5em;
-        border-radius: .75em;
+        width: 1.8em;
+        height: 1.8em;
+        border-radius: .9em;
         scale: 1.4;
         opacity: 0;
         transition: scale .2s, opacity .2s;
