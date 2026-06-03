@@ -69,20 +69,37 @@
         .popup {
             translate: 0 1em;
             opacity: 0;
+
+            & > div {
+                pointer-events: none;
+            }
         }
     }
 
     .popup {
         width: 100%;
+        max-height: 100%;
         box-sizing: border-box;
         padding: 2em;
         z-index: 101;
         transition: translate .2s, opacity .2s;
         opacity: 1;
+        position: relative;
+        pointer-events: none;
+
+        & > div {
+            max-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            pointer-events: auto;
+        }
 
         .title-container {
             padding: 1.2em;
             width: 100%;
+            flex-shrink: 0;
+            flex-grow: 0;
             box-sizing: border-box;
             text-align: center;
             background-color: #333;
@@ -105,18 +122,22 @@
             display: flex;
             flex-direction: column;
             align-items: stretch;
+            flex-shrink: 1;
+            flex-grow: 0;
+            overflow-y: auto;
+            scrollbar-color: #222 transparent;
 
             .text {
                 margin: 0;
             }
-        }
 
-        .buttons-container {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-            align-items: center;
+            .buttons-container {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+            }
         }
     }
 </style>
