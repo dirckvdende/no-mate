@@ -102,7 +102,7 @@
         background-color: #ddd;
         border-radius: .3em;
         box-sizing: border-box;
-        border: .07em solid transparent;
+        border: .09em solid transparent;
         cursor: pointer;
         margin: .14em;
         position: relative;
