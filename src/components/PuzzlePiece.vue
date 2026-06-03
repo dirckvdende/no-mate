@@ -107,7 +107,7 @@
         box-sizing: border-box;
         padding-bottom: .3em;
         border-radius: .7em;
-        box-shadow: inset 0 -.5em 0 0 #0006;
+        box-shadow: inset 0 -.5em 0 0 #0003;
         display: flex;
         justify-content: center;
         align-items: center;
