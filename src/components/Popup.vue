@@ -20,6 +20,11 @@
                         </div>
                         <div :class="$style['body-container']">
                             <p :class="$style.text"><slot /></p>
+                            <div
+                                v-if="$slots.buttons"
+                                :class="$style['buttons-container']">
+                                <slot name="buttons" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,6 +109,14 @@
             .text {
                 margin: 0;
             }
+        }
+
+        .buttons-container {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
         }
     }
 </style>
