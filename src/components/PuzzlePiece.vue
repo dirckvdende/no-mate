@@ -40,6 +40,10 @@
         width: ${1 / pixelSize.value}px;
         height: ${1 / pixelSize.value}px;
     `)
+    const baseStyle = computed(() => `
+        left: ${toPixelCoords(initialPosition).x}px;
+        top: ${toPixelCoords(initialPosition).y}px;
+    `)
 
     syncPlacementAndTarget(placement, target)
 
@@ -58,6 +62,9 @@
 </script>
 
 <template>
+    <div :class="$style['base-square-container']">
+        <div :class="$style['base-square']" :style="[baseStyle, sizeStyle]" />
+    </div>
     <div
         ref="drag-container"
         :class="$style['drag-container']">
@@ -82,6 +89,21 @@
 </template>
 
 <style lang="scss" module>
+    .base-square-container {
+        position: absolute;
+        pointer-events: none;
+        width: 100%;
+        height: 100%;
+
+        .base-square {
+            position: absolute;
+            border-radius: .7em;
+            box-sizing: border-box;
+            border: .2em dashed #ccc;
+            scale: .89;
+        }
+    }
+
     .drag-container {
         position: absolute;
         pointer-events: none;
@@ -100,8 +122,6 @@
     
     .display-box {
         position: absolute;
-        left: 5%;
-        top: 5%;
         scale: .9;
         background: black;
         box-sizing: border-box;
