@@ -47,9 +47,19 @@
                 <Icon :class="$style.icon" :path="mdiCheckBold" />
             </div>
         </div>
+        <p v-if="!nextPuzzleId" :class="$style['no-next-text']">
+            It looks like you've reached the last puzzle. Keep your eyes peeled
+            for more puzzles coming soon!
+        </p>
         <template v-slot:buttons>
             <PopupButton
+                v-if="nextPuzzleId"
                 :icon="mdiDotsHorizontal"
+                @click="showLevelSelect" />
+            <PopupButton
+                v-else
+                :icon="mdiDotsHorizontal"
+                text="Puzzle List"
                 @click="showLevelSelect" />
             <PopupButton
                 v-if="nextPuzzleId"
@@ -83,5 +93,10 @@
         fill: white;
         width: 70%;
         height: 70%;
+    }
+
+    .no-next-text {
+        font-size: 1.2em;
+        text-align: center;
     }
 </style>
