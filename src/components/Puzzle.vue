@@ -48,13 +48,20 @@
 
     // Show popup and store solved status once solved
     const popupVisible = ref(false)
-    const { addSolved } = useCompletedPuzzlesStore()
+    const { addSolved, addAttempted } = useCompletedPuzzlesStore()
     watch(isSolved, (solved, prevSolved) => {
         if (!solved || prevSolved == solved || !puzzleId.value)
             return
         popupVisible.value = true
         addSolved(puzzleId.value)
     })
+
+    // Mark puzzle as attempted once it is loaded
+    watch(puzzleId, (puzzleId) => {
+        if (!puzzleId)
+            return
+        addAttempted(puzzleId)
+    }, { immediate: true })
 </script>
 
 <template>

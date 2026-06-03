@@ -2,13 +2,13 @@
     import { puzzles } from "@/puzzles/puzzles"
     import { usePuzzleStore } from "@/stores/usePuzzleStore"
     import Icon from "./Icon.vue"
-    import { mdiCheckBold } from "@mdi/js"
+    import { mdiCheckBold, mdiDotsHorizontal } from "@mdi/js"
     import { useCompletedPuzzlesStore } from
         "@/stores/useCompletedPuzzlesStore.ts"
     import Footer from "./Footer.vue"
 
     const { puzzleId } = usePuzzleStore()
-    const { completedPuzzles } = useCompletedPuzzlesStore()
+    const { hasSolved, hasAttempted } = useCompletedPuzzlesStore()
 
     function loadLevel(id: keyof typeof puzzles): void {
         puzzleId.value = id
@@ -25,9 +25,14 @@
                 @click="loadLevel(id)">
                 #{{ id }}
                 <div
-                    v-if="completedPuzzles.find(v => v == id)"
+                    v-if="hasSolved(id)"
                     :class="$style.checkmark">
                     <Icon :path="mdiCheckBold" :class="$style.icon" />
+                </div>
+                <div
+                    v-else-if="hasAttempted(id)"
+                    :class="$style.attempted">
+                    <Icon :path="mdiDotsHorizontal" :class="$style.icon" />
                 </div>
             </button>
         </div>
@@ -106,7 +111,7 @@
             border-color: #222;
         }
 
-        .checkmark {
+        .checkmark, .attempted {
             pointer-events: none;
             position: absolute;
             display: flex;
@@ -116,7 +121,6 @@
             height: .9em;
             right: -.2em;
             top: -.2em;
-            background-color: #1c9c0e;
             border-radius: .5em;
 
             .icon {
@@ -124,6 +128,14 @@
                 width: 65%;
                 height: 65%;
             }
+        }
+
+        .checkmark {
+            background-color: #1c9c0e;
+        }
+
+        .attempted {
+            background-color: #ff6f00;
         }
     }
 </style>
