@@ -29,7 +29,7 @@
             - env(safe-area-inset-bottom, 0px));
         font-size: min(
             calc(var(--true-width) / 100 * 4),
-            calc(var(--height-size) / 100 * 2),
+            calc(var(--true-height) / 100 * 2),
         );
         touch-action: none;
         font-family: "Doppio One", sans-serif;
