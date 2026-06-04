@@ -21,10 +21,10 @@
     body {
         background-color: #eee;
         margin: 0;
-        --true-width: calc(100lvw
+        --true-width: calc(100vw
             - env(safe-area-inset-left, 0px)
             - env(safe-area-inset-right, 0px));
-        --true-height: calc(100lvh
+        --true-height: calc(100vh
             - env(safe-area-inset-top, 0px)
             - env(safe-area-inset-bottom, 0px));
         font-size: min(
