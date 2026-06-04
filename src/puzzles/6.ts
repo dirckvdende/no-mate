@@ -25,6 +25,6 @@ export const puzzle: Puzzle = {
         { x: 1, y: 5 },
         { x: 2, y: 5 },
     ],
-    pieces: [knight, knight, rook, king, bishop, pawn, pawn, pawn, pawn, pawn,
+    pieces: [knight, knight, rook, king, bishop, bishop, pawn, pawn, pawn, pawn,
         pawn],
 }
