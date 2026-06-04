@@ -42,11 +42,13 @@
         background-color: #333;
         color: #eee;
         font-size: 1.1em;
-        transition: bottom .2s;
+        transition: bottom .2s, opacity .2s;
         z-index: 200;
+        opacity: 0;
     }
 
     .container.visible {
         bottom: 1em;
+        opacity: 1;
     }
 </style>
