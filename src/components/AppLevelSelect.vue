@@ -96,8 +96,8 @@
     }
 
     .level {
-        width: 2.6em;
-        height: 2.6em;
+        width: 2.3em;
+        height: 2.3em;
         font-size: 3em;
         background-color: #ddd;
         border-radius: .3em;
@@ -117,8 +117,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: .9em;
-            height: .9em;
+            width: .8em;
+            height: .8em;
             right: -.2em;
             top: -.2em;
             border-radius: .5em;
