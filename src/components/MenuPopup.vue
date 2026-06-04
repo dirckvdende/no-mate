@@ -1,6 +1,6 @@
 <script setup lang="ts">
-    import { mdiCloseThick, mdiFullscreen, mdiListStatus, mdiShareVariant } from
-        "@mdi/js"
+    import { mdiCloseThick, mdiFullscreen, mdiListStatus, mdiShareVariant, 
+        mdiTrashCan } from "@mdi/js"
     import Popup from "./Popup.vue"
     import PopupButton from "./PopupButton.vue"
     import MenuPopupButton from "./MenuPopupButton.vue"
@@ -9,6 +9,7 @@
     import { usePuzzleShare } from "@/composables/usePuzzleShare.ts"
     import Toast from "./Toast.vue"
     import { ref } from "vue"
+    import ClearProgressPopup from "./ClearProgressPopup.vue"
 
     const visible = defineModel("visible", { default: false })
 
@@ -16,6 +17,7 @@
     const { toggle: toggleFullscreen } = useFullscreen()
     const shareToClipboard = usePuzzleShare()
     const copyToastVisible = ref(false)
+    const clearProgressPopupVisible = ref(false)
 
     function showPuzzleList(): void {
         visible.value = false
@@ -25,6 +27,11 @@
     function sharePuzzle(): void {
         shareToClipboard()
         copyToastVisible.value = true
+    }
+
+    function showClearProgressPopup(): void {
+        visible.value = false
+        clearProgressPopupVisible.value = true
     }
 </script>
 
@@ -45,6 +52,11 @@
                 @click="toggleFullscreen"
                 :icon-size="1" />
             <MenuPopupButton
+                :icon="mdiTrashCan"
+                text="Delete Progress"
+                @click="showClearProgressPopup"
+                :icon-size=".9" />
+            <MenuPopupButton
                 :icon="mdiShareVariant"
                 text="Share Puzzle"
                 @click="sharePuzzle"
@@ -57,6 +69,7 @@
         </template>
     </Popup>
     <Toast v-model:visible="copyToastVisible">Copied to clipboard</Toast>
+    <ClearProgressPopup v-model:visible="clearProgressPopupVisible" />
 </template>
 
 <style lang="scss" module>
