@@ -2,7 +2,7 @@
     import { puzzles } from "@/puzzles/puzzles"
     import { usePuzzleStore } from "@/stores/usePuzzleStore"
     import Icon from "./Icon.vue"
-    import { mdiCheckBold, mdiDotsHorizontal } from "@mdi/js"
+    import { mdiCheckBold, mdiChessBishop, mdiDotsHorizontal } from "@mdi/js"
     import { useCompletedPuzzlesStore } from
         "@/stores/useCompletedPuzzlesStore.ts"
     import Footer from "./Footer.vue"
@@ -16,9 +16,11 @@
 </script>
 
 <template>
-    <h1 :class="$style.title">Tomaat</h1>
+    <h1 :class="$style.title">No Mate</h1>
+    <h3 :class="$style.subtitle">A chess-like puzzle game</h3>
     <div :class="$style['level-list']">
         <div :class="$style.list">
+            <template v-for="_ in 100">
             <button
                 v-for="_, id in puzzles"
                 :class="$style.level"
@@ -35,6 +37,7 @@
                     <Icon :path="mdiDotsHorizontal" :class="$style.icon" />
                 </div>
             </button>
+            </template>
         </div>
         <div :class="$style['fade-top']" />
         <div :class="$style['fade-bottom']" />
@@ -45,7 +48,14 @@
 <style lang="scss" module>
     .title {
         font-size: 3.5em;
-        margin: 1.5em 0 .5em 0;
+        margin: .8em 0 .2em 0;
+        color: #333;
+    }
+
+    .subtitle {
+        font-weight: normal;
+        font-size: 1.3em;
+        margin: 0 0 1.5em 0;
     }
 
     .level-list {
