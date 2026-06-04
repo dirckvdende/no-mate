@@ -20,7 +20,6 @@
     <h3 :class="$style.subtitle">A chess-like puzzle game</h3>
     <div :class="$style['level-list']">
         <div :class="$style.list">
-            <template v-for="_ in 100">
             <button
                 v-for="_, id in puzzles"
                 :class="$style.level"
@@ -37,7 +36,6 @@
                     <Icon :path="mdiDotsHorizontal" :class="$style.icon" />
                 </div>
             </button>
-            </template>
         </div>
         <div :class="$style['fade-top']" />
         <div :class="$style['fade-bottom']" />
