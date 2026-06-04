@@ -21,14 +21,15 @@
     body {
         background-color: #eee;
         margin: 0;
-        font-size: min(
-            calc(2vh
-                - env(safe-area-inset-top, 0px)
-                - env(safe-area-inset-bottom, 0px)),
-            calc(4vw
-                - env(safe-area-inset-left, 0px)
-                - env(safe-area-inset-right, 0px)),
+        --width-size: calc(
+            calc(4lvw - env(safe-area-inset-left, 0px))
+            - env(safe-area-inset-right, 0px)
         );
+        --height-size: calc(
+            calc(2lvh - env(safe-area-inset-top, 0px))
+            - env(safe-area-inset-bottom, 0px)
+        );
+        font-size: min(var(--width-size), var(--height-size));
         touch-action: none;
         font-family: "Doppio One", sans-serif;
         color: #222;
