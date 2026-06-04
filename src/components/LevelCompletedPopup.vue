@@ -1,5 +1,6 @@
 <script setup lang="ts">
-    import { mdiArrowRight, mdiCheckBold, mdiDotsHorizontal } from "@mdi/js"
+    import { mdiArrowLeftThick, mdiArrowRightThick, mdiCheckBold } from
+        "@mdi/js"
     import Popup from "./Popup.vue"
     import PopupButton from "./PopupButton.vue"
     import Icon from "./Icon.vue"
@@ -53,17 +54,16 @@
         </p>
         <template v-slot:buttons>
             <PopupButton
-                v-if="nextPuzzleId"
-                :icon="mdiDotsHorizontal"
-                @click="showLevelSelect" />
+                :icon="mdiArrowLeftThick"
+                @click="visible = false" />
             <PopupButton
-                v-else
-                :icon="mdiDotsHorizontal"
+                v-if="!nextPuzzleId"
+                :icon="mdiArrowRightThick"
                 text="Puzzle List"
                 @click="showLevelSelect" />
             <PopupButton
                 v-if="nextPuzzleId"
-                :icon="mdiArrowRight"
+                :icon="mdiArrowRightThick"
                 text="Next Puzzle"
                 @click="loadNextPuzzle" />
         </template>
