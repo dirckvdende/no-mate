@@ -1,19 +1,30 @@
 <script setup lang="ts">
-    import { mdiCloseThick, mdiFullscreen, mdiListStatus } from "@mdi/js"
+    import { mdiCloseThick, mdiFullscreen, mdiListStatus, mdiShareVariant } from
+        "@mdi/js"
     import Popup from "./Popup.vue"
     import PopupButton from "./PopupButton.vue"
     import MenuPopupButton from "./MenuPopupButton.vue"
     import { usePuzzleStore } from "@/stores/usePuzzleStore.ts"
     import { useFullscreen } from "@vueuse/core"
+    import { usePuzzleShare } from "@/composables/usePuzzleShare.ts"
+    import Toast from "./Toast.vue"
+    import { ref } from "vue"
 
     const visible = defineModel("visible", { default: false })
 
     const { puzzleId } = usePuzzleStore()
     const { toggle: toggleFullscreen } = useFullscreen()
+    const shareToClipboard = usePuzzleShare()
+    const copyToastVisible = ref(false)
 
     function showPuzzleList(): void {
         visible.value = false
         puzzleId.value = null
+    }
+
+    function sharePuzzle(): void {
+        shareToClipboard()
+        copyToastVisible.value = true
     }
 </script>
 
@@ -26,11 +37,18 @@
             <MenuPopupButton
                 :icon="mdiListStatus"
                 text="Puzzle List"
-                @click="showPuzzleList" />
+                @click="showPuzzleList"
+                :icon-size=".9" />
             <MenuPopupButton
                 :icon="mdiFullscreen"
                 text="Toggle Fullscreen"
-                @click="toggleFullscreen" />
+                @click="toggleFullscreen"
+                :icon-size="1" />
+            <MenuPopupButton
+                :icon="mdiShareVariant"
+                text="Share Puzzle"
+                @click="sharePuzzle"
+                :icon-size=".82" />
         </div>
         <template v-slot:buttons>
             <PopupButton
@@ -38,6 +56,7 @@
                 :icon="mdiCloseThick" />
         </template>
     </Popup>
+    <Toast v-model:visible="copyToastVisible">Copied to clipboard</Toast>
 </template>
 
 <style lang="scss" module>

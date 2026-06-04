@@ -1,11 +1,13 @@
 <script setup lang="ts">
     import Icon from "./Icon.vue"
 
-    const { icon, text } = defineProps<{
+    const { icon, text, iconSize = .8 } = defineProps<{
         /** Icon to display inside the button */
         icon: string
         /** Text to display inside the button */
         text: string
+        /** Size of the icon as a proportion of height (default 0.8) */
+        iconSize?: number
     }>()
 
     const emit = defineEmits<{
@@ -17,7 +19,9 @@
 <template>
     <button @click="emit('click')" :class="$style.button">
         <div :class="$style['icon-container']">
-            <Icon :path="icon" :class="$style.icon" />
+            <Icon :path="icon" :class="$style.icon" :style="{
+                height: `${iconSize * 100}%`,
+            }" />
         </div>
         <span :class="$style.text">{{ text }}</span>
     </button>
@@ -43,6 +47,9 @@
             aspect-ratio: 1 / 1;
             flex-shrink: 0;
             flex-grow: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             .icon {
                 fill: #333;
