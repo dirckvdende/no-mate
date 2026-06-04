@@ -53,7 +53,7 @@
     .subtitle {
         font-weight: normal;
         font-size: 1.3em;
-        margin: 0 0 1.5em 0;
+        margin: 0 0 1em 0;
     }
 
     .level-list {
@@ -78,7 +78,7 @@
             justify-content: center;
             flex-wrap: wrap;
             scrollbar-color: #222 transparent;
-            padding: 1em 0;
+            padding: 1.7em 0 1em 0;
         }
 
         .fade-top {
