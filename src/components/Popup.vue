@@ -56,6 +56,7 @@
         .inner-container {
             @extend %main-container-inside;
             justify-content: center;
+            max-width: 33em;
         }
     }
 
