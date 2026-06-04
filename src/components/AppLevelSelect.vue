@@ -85,8 +85,8 @@
 
         .fade-top {
             position: absolute;
-            height: 1.5em;
-            top: -.1em;
+            height: 2em;
+            top: -.01em;
             left: 0;
             width: 100%;
             background: linear-gradient(#eee, transparent);
@@ -95,8 +95,8 @@
 
         .fade-bottom {
             position: absolute;
-            height: 1.5em;
-            bottom: -.1em;
+            height: 2em;
+            bottom: -.01em;
             left: 0;
             width: 100%;
             background: linear-gradient(transparent, #eee);
