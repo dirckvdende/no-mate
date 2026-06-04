@@ -12,4 +12,5 @@ export const puzzles = {
     '9': (await import("./9")).puzzle,
     '10': (await import("./10")).puzzle,
     '11': (await import("./11")).puzzle,
+    '12': (await import("./12")).puzzle,
 } as const
