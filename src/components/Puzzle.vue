@@ -29,8 +29,8 @@
 
     const containerStyle = computed(() => { 
         const { x: width, y: height } = renderSize.value
-        if (height / width > 1.4)
-            return `height: 35em; aspect-ratio: ${width} / ${height}`
+        if (height / width > 38 / 25)
+            return `height: 38em; aspect-ratio: ${width} / ${height}`
         return `width: 25em; aspect-ratio: ${width} / ${height}`
     })
 
