@@ -1,16 +1,29 @@
 
+import { puzzle as puzzle1 } from "./1"
+import { puzzle as puzzle2 } from "./2"
+import { puzzle as puzzle3 } from "./3"
+import { puzzle as puzzle4 } from "./4"
+import { puzzle as puzzle5 } from "./5"
+import { puzzle as puzzle6 } from "./6"
+import { puzzle as puzzle7 } from "./7"
+import { puzzle as puzzle8 } from "./8"
+import { puzzle as puzzle9 } from "./9"
+import { puzzle as puzzle10 } from "./10"
+import { puzzle as puzzle11 } from "./11"
+import { puzzle as puzzle12 } from "./12"
+
 /** List of all puzzles */
 export const puzzles = {
-    '1': (await import("./1")).puzzle,
-    '2': (await import("./2")).puzzle,
-    '3': (await import("./3")).puzzle,
-    '4': (await import("./4")).puzzle,
-    '5': (await import("./5")).puzzle,
-    '6': (await import("./6")).puzzle,
-    '7': (await import("./7")).puzzle,
-    '8': (await import("./8")).puzzle,
-    '9': (await import("./9")).puzzle,
-    '10': (await import("./10")).puzzle,
-    '11': (await import("./11")).puzzle,
-    '12': (await import("./12")).puzzle,
+    '1': puzzle1,
+    '2': puzzle2,
+    '3': puzzle3,
+    '4': puzzle4,
+    '5': puzzle5,
+    '6': puzzle6,
+    '7': puzzle7,
+    '8': puzzle8,
+    '9': puzzle9,
+    '10': puzzle10,
+    '11': puzzle11,
+    '12': puzzle12,
 } as const
