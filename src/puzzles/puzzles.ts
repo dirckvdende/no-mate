@@ -8,4 +8,5 @@ export const puzzles = {
     '5': (await import("./5")).puzzle,
     '6': (await import("./6")).puzzle,
     '7': (await import("./7")).puzzle,
+    '8': (await import("./8")).puzzle,
 } as const
