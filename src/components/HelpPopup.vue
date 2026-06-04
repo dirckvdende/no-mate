@@ -47,7 +47,6 @@ import HelpPopupPiece from "./HelpPopupPiece.vue"
 
 <style lang="scss" module>
     .text {
-        font-size: 1.1em;
         margin-top: 0;
     }
 
