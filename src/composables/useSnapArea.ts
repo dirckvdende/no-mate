@@ -70,6 +70,8 @@ export function useSnapArea(
     options?: UseSnapAreaOptions,
 ): UseSnapAreaReturn {
 
+    console.log("created snapArea")
+
     const fullOptions = addDefaultOptions(options)
     const targetSnapCount: Map<string, number> = new Map()
     const targets = ref<SnapAreaTarget[]>([])
@@ -119,6 +121,7 @@ export function useSnapArea(
         const position = ref<Position | null>(null)
 
         if (bestSnapTarget !== null) {
+            console.log("Snapping to target", bestSnapTarget.name)
             target.value = bestSnapTarget.name
             position.value = bestSnapTarget.position
             targetSnapCount.set(target.value,
@@ -133,9 +136,10 @@ export function useSnapArea(
                 return
             }
             position.value = targetInfo.position
-        }, { deep: true })
+        }, { deep: true, flush: "sync" })
 
         function unsnap(): void {
+            console.log("Unsnapping from target", target.value)
             if (target.value !== null)
                 targetSnapCount.set(target.value,
                     (targetSnapCount.get(target.value) ?? 1) - 1)
