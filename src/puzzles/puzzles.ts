@@ -13,6 +13,7 @@ import { puzzle as puzzle11 } from "./11"
 import { puzzle as puzzle12 } from "./12"
 import { puzzle as puzzle13 } from "./13"
 import { puzzle as puzzle14 } from "./14"
+import { puzzle as puzzle15 } from "./15"
 
 /** List of all puzzles */
 export const puzzles = {
@@ -30,4 +31,5 @@ export const puzzles = {
     '12': puzzle12,
     '13': puzzle13,
     '14': puzzle14,
+    '15': puzzle15,
 } as const
