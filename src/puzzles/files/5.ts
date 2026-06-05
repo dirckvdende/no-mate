@@ -1,18 +1,16 @@
 
 import type { Puzzle } from "@/types/puzzle"
-import { bishop, knight } from "./pieces"
+import { knight, bishop, king } from "../pieces"
 
 export const puzzle: Puzzle = {
     spaces: [
+        { x: 1, y: 0 },
         { x: 2, y: 0 },
+        { x: 0, y: 1 },
         { x: 2, y: 1 },
         { x: 0, y: 2 },
         { x: 1, y: 2 },
         { x: 2, y: 2 },
-        { x: 3, y: 2 },
-        { x: 4, y: 2 },
-        { x: 2, y: 3 },
-        { x: 2, y: 4 },
     ],
-    pieces: [bishop, bishop, bishop, bishop, knight, knight],
+    pieces: [king, king, bishop, knight],
 }
