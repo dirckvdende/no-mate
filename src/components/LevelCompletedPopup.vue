@@ -6,7 +6,8 @@
     import Icon from "./Icon.vue"
     import { usePuzzleStore } from "@/stores/usePuzzleStore"
     import { puzzles } from "@/puzzles/puzzles.ts"
-    import { computed } from "vue"
+    import { useNextPuzzle } from "@/composables/useNextPuzzle.ts"
+    import { usePuzzleFilter } from "@/composables/usePuzzleFilter.ts"
 
     const visible = defineModel("visible", { default: false })
 
@@ -17,17 +18,8 @@
         puzzleId.value = null
     }
 
-    const nextPuzzleId = computed(() => {
-        if (!puzzleId.value)
-            return null
-        const index = Number(puzzleId.value)
-        if (!Number.isInteger(index))
-            return null
-        const nextId = String(index + 1)
-        if (!puzzles.hasOwnProperty(nextId))
-            return null
-        return nextId
-    })
+    const nextPuzzleId = useNextPuzzle(puzzleId)
+    const { name: filterName } = usePuzzleFilter()
 
     function loadNextPuzzle(): void {
         const nextId = nextPuzzleId.value
@@ -48,7 +40,15 @@
                 <Icon :class="$style.icon" :path="mdiCheckBold" />
             </div>
         </div>
-        <p v-if="!nextPuzzleId" :class="$style['no-next-text']">
+        <p
+            v-if="!nextPuzzleId && filterName !== null"
+            :class="$style['no-next-text']">
+            This was the last puzzle in this set. View all puzzles by going to
+            the puzzle list!
+        </p>
+        <p
+            v-else-if="!nextPuzzleId"
+            :class="$style['no-next-text']">
             It looks like you've reached the last puzzle. Keep your eyes peeled
             for more puzzles coming soon!
         </p>

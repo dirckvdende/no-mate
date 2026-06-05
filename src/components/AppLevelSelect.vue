@@ -2,10 +2,11 @@
     import { puzzles } from "@/puzzles/puzzles"
     import { usePuzzleStore } from "@/stores/usePuzzleStore"
     import Icon from "./Icon.vue"
-    import { mdiCheckBold, mdiChessBishop, mdiDotsHorizontal } from "@mdi/js"
+    import { mdiCheckBold, mdiDotsHorizontal } from "@mdi/js"
     import { useCompletedPuzzlesStore } from
         "@/stores/useCompletedPuzzlesStore.ts"
     import Footer from "./Footer.vue"
+    import { usePuzzleFilter } from "@/composables/usePuzzleFilter.ts"
 
     const { puzzleId } = usePuzzleStore()
     const { hasSolved, hasAttempted } = useCompletedPuzzlesStore()
@@ -13,29 +14,43 @@
     function loadLevel(id: keyof typeof puzzles): void {
         puzzleId.value = id
     }
+
+    const {
+        name: filterName,
+        filter: activeFilter,
+        remove: removeFilter,
+    } = usePuzzleFilter()
 </script>
 
 <template>
     <h1 :class="$style.title">No Mate</h1>
     <h3 :class="$style.subtitle">A chess-like puzzle game</h3>
+    <div :class="$style['filter-message']" v-if="filterName == 'blog-post'">
+        Only showing blog post puzzles.
+        <a @click="removeFilter">Remove filter</a>
+    </div>
     <div :class="$style['level-list']">
         <div :class="$style.list">
-            <button
-                v-for="_, id in puzzles"
-                :class="$style.level"
-                @click="loadLevel(id)">
-                #{{ id }}
-                <div
-                    v-if="hasSolved(id)"
-                    :class="$style.checkmark">
-                    <Icon :path="mdiCheckBold" :class="$style.icon" />
-                </div>
-                <div
-                    v-else-if="hasAttempted(id)"
-                    :class="$style.attempted">
-                    <Icon :path="mdiDotsHorizontal" :class="$style.icon" />
-                </div>
-            </button>
+            <template v-for="_, id in puzzles">
+                <button
+                    v-if="activeFilter(id)"
+                    :class="$style.level"
+                    @click="loadLevel(id)">
+                    {{ activeFilter(id) !== true
+                        ? activeFilter(id)
+                        : `#${id}` }}
+                    <div
+                        v-if="hasSolved(id)"
+                        :class="$style.checkmark">
+                        <Icon :path="mdiCheckBold" :class="$style.icon" />
+                    </div>
+                    <div
+                        v-else-if="hasAttempted(id)"
+                        :class="$style.attempted">
+                        <Icon :path="mdiDotsHorizontal" :class="$style.icon" />
+                    </div>
+                </button>
+            </template>
         </div>
         <div :class="$style['fade-top']" />
         <div :class="$style['fade-bottom']" />
@@ -143,6 +158,26 @@
 
         .attempted {
             background-color: #ff6f00;
+        }
+    }
+
+    .filter-message {
+        width: calc(100% - 2em);
+        box-sizing: border-box;
+        background-color: #8ed3f5;
+        color: #2a79a1;
+        padding: .5em 1.3em;
+        border-radius: 100em;
+        margin-bottom: .5em;
+
+        & > a {
+            color: inherit;
+            text-decoration: underline;
+            cursor: pointer;
+
+            &:hover {
+                color: #174157;
+            }
         }
     }
 </style>

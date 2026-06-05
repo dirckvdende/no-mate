@@ -2,7 +2,8 @@
 import { computed, watch, type ComputedRef, type Ref } from "vue"
 import { puzzles } from "@/puzzles/puzzles"
 import type { Puzzle } from "@/types/puzzle"
-import { refWithControl, useUrlSearchParams, watchTriggerable } from "@vueuse/core"
+import { refWithControl, watchTriggerable } from "@vueuse/core"
+import { useQueryParams } from "./useQueryParams"
 
 /**
  * Composable for getting/loading a puzzle using query parameters
@@ -15,7 +16,7 @@ export function useLoadedPuzzle(): {
     puzzle: ComputedRef<Puzzle | null>
 } {
 
-    const queryParams = useUrlSearchParams()
+    const queryParams = useQueryParams()
     const id = refWithControl<keyof typeof puzzles | null>(null)
 
     const { trigger: triggerIdWatch } = watchTriggerable(id, (id) => {
