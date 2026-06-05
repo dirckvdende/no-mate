@@ -38,7 +38,7 @@ export default defineConfig((configEnv) => ({
         },
     },
     build: {
-        rollupOptions: {
+        rolldownOptions: {
             input: {
                 main: htmlPath("index"),
             },
