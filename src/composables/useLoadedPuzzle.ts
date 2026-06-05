@@ -39,7 +39,7 @@ export function useLoadedPuzzle(): {
     const puzzle = computed(() => {
         if (!id.value)
             return null
-        return puzzles[id.value]
+        return puzzles[id.value]!
     })
 
     return { id, puzzle }

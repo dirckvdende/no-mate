@@ -1,35 +1,67 @@
 
-import { puzzle as puzzle1 } from "./files/1"
-import { puzzle as puzzle2 } from "./files/2"
-import { puzzle as puzzle3 } from "./files/3"
-import { puzzle as puzzle4 } from "./files/4"
-import { puzzle as puzzle5 } from "./files/5"
-import { puzzle as puzzle6 } from "./files/6"
-import { puzzle as puzzle7 } from "./files/7"
-import { puzzle as puzzle8 } from "./files/8"
-import { puzzle as puzzle9 } from "./files/9"
-import { puzzle as puzzle10 } from "./files/10"
-import { puzzle as puzzle11 } from "./files/11"
-import { puzzle as puzzle12 } from "./files/12"
-import { puzzle as puzzle13 } from "./files/13"
-import { puzzle as puzzle14 } from "./files/14"
-import { puzzle as puzzle15 } from "./files/15"
+import type { Puzzle } from "@/types/puzzle"
+
+// Import "puzzle" export from all puzzle files
+const modules = import.meta.glob("./files/*.ts", {
+    eager: true,
+    import: "puzzle",
+})
+
+/**
+ * Sort an object by its keys
+ * @param obj The object to be sorted, this object is not modified
+ * @param compare Compare function for sorting
+ * @returns Sorted version of the object
+ */
+function sortObjectKeys<T>(
+    obj: Record<string, T>,
+    compare: (a: string, b: string) => number,
+): Record<string, T> {
+    const entries = Object.entries(obj)
+    entries.sort(([keyA], [keyB]) => compare(keyA, keyB))
+    const result: Record<string, T> = {}
+    for (const [key, value] of entries)
+        result[key] = value
+    return result
+}
+
+/**
+ * Find a number in a filename, starting from the end of the path
+ * @param filename The name of the file
+ * @returns The last number present in the filename, or NaN if no number could
+ * be found
+ */
+function filenameToNumber(filename: string): number {
+    const split = filename.split(/(\/|\.)/)
+    while (split.length > 0
+        && !Number.isInteger(Number(split[split.length - 1])))
+        split.pop()
+    if (split.length == 0)
+        return NaN
+    return Number(split[split.length - 1])
+}
+
+/**
+ * Compare two filenames. Used for sorting
+ * @param a First filename to compare
+ * @param b Second filename to compare
+ * @returns A value less than 0 if a < b, equal to 0 if a == b, and more than 0
+ * if a > b
+ */
+function compareFilenames(a: string, b: string): number {
+    return filenameToNumber(a) - filenameToNumber(b)
+}
+
+/**
+ * Load all puzzles from the modules import
+ * @returns Record of the puzzles
+ */
+function loadPuzzles(): Record<string, Puzzle> {
+    const puzzles: Record<string, Puzzle> = {}
+    for (const [filename, puzzle] of Object.entries(modules))
+        puzzles[filenameToNumber(filename).toFixed(0)] = puzzle as Puzzle
+    return sortObjectKeys(puzzles, compareFilenames)
+}
 
 /** List of all puzzles */
-export const puzzles = {
-    '1': puzzle1,
-    '2': puzzle2,
-    '3': puzzle3,
-    '4': puzzle4,
-    '5': puzzle5,
-    '6': puzzle6,
-    '7': puzzle7,
-    '8': puzzle8,
-    '9': puzzle9,
-    '10': puzzle10,
-    '11': puzzle11,
-    '12': puzzle12,
-    '13': puzzle13,
-    '14': puzzle14,
-    '15': puzzle15,
-} as const
+export const puzzles = loadPuzzles()
