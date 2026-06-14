@@ -1,6 +1,7 @@
 
-import { type MaybeRefOrGetter, type Ref, ref, toValue, watch } from "vue"
+import { type MaybeRefOrGetter, onMounted, onUnmounted, type Ref, ref, toValue, watch } from "vue"
 import type { Position } from "@/types/position"
+import { createEventHook } from "@vueuse/core"
 
 /**
  * Object returned by the useSnapArea composable
@@ -76,6 +77,12 @@ export function useSnapArea(
     const targetSnapCount: Map<string, number> = new Map()
     const targets = ref<SnapAreaTarget[]>([])
 
+    // Reset target snaps 
+    const resetEvent = createEventHook()
+    resetEvent.on(() => console.log("resetting"))
+    onMounted(() => resetEvent.trigger())
+    onUnmounted(() => resetEvent.trigger())
+
     function distanceToTargetSquared(
         position: Position,
         target: SnapAreaTarget,
@@ -128,7 +135,7 @@ export function useSnapArea(
                 (targetSnapCount.get(target.value) ?? 0) + 1)
         }
 
-        const { stop } = watch(targets, () => {
+        const { stop: stopTargetWatch } = watch(targets, () => {
             const targetInfo = targets.value.find(({ name }) =>
                 name == target.value)
             if (!targetInfo) {
@@ -138,6 +145,8 @@ export function useSnapArea(
             position.value = targetInfo.position
         }, { deep: true, flush: "sync" })
 
+        const { off: stopEventListen } = resetEvent.on(unsnap)
+
         function unsnap(): void {
             console.log("Unsnapping from target", target.value)
             if (target.value !== null)
@@ -145,7 +154,8 @@ export function useSnapArea(
                     (targetSnapCount.get(target.value) ?? 1) - 1)
             target.value = null
             position.value = null
-            stop()
+            stopTargetWatch()
+            stopEventListen()
         }
 
         return { target, position, unsnap }
