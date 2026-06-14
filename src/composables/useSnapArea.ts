@@ -35,6 +35,10 @@ export type UseSnapAreaReturn = {
         /** Unsnap the snapped item. Has no effect if the item is not snapped */
         unsnap: () => void
     }
+    /**
+     * Reset all snapped items to not unsnapped
+     */
+    reset: () => void
 }
 
 /**
@@ -79,7 +83,6 @@ export function useSnapArea(
 
     // Reset target snaps 
     const resetEvent = createEventHook()
-    resetEvent.on(() => console.log("resetting"))
     onMounted(() => resetEvent.trigger())
     onUnmounted(() => resetEvent.trigger())
 
@@ -161,7 +164,11 @@ export function useSnapArea(
         return { target, position, unsnap }
     }
 
-    return { container, targets, options: fullOptions, snap }
+    function reset(): void {
+        resetEvent.trigger()
+    }
+
+    return { container, targets, options: fullOptions, snap, reset }
 
 }
 

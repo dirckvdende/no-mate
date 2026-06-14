@@ -62,6 +62,14 @@
             return
         addAttempted(puzzleId)
     }, { immediate: true })
+
+    // Reset all snaps when puzzle is changed. This is a bad fix for a bug with
+    // the snap area/item composables
+    watch(puzzleId, (id, prevId) => {
+        if (id == prevId)
+            return
+        snapArea.reset()
+    })
 </script>
 
 <template>
