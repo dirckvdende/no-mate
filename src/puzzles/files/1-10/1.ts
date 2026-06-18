@@ -1,6 +1,6 @@
 
 import type { Puzzle } from "@/types/puzzle"
-import { rook } from "../pieces"
+import { rook } from "@/puzzles/pieces"
 
 export const puzzle: Puzzle = {
     spaces: [

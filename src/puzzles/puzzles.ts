@@ -2,7 +2,7 @@
 import type { Puzzle } from "@/types/puzzle"
 
 // Import "puzzle" export from all puzzle files
-const modules = import.meta.glob("./files/*.ts", {
+const modules = import.meta.glob("./files/**/*.ts", {
     eager: true,
     import: "puzzle",
 })
